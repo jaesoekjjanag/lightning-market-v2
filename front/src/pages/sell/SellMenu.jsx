@@ -22,7 +22,7 @@ const SellMenu = ({ children }) => {
     <div>
       <Header />
       <SellPageWrapper className="wrapper">
-        <div><Link to='/sell/Register'>상품등록</Link></div>
+        <div><Link to='/sell/register'>상품등록</Link></div>
         <div><Link to='/sell/manage'>상품관리</Link></div>
         <div><Link to='/sell/history' >구매/판매 내역</Link></div>
       </SellPageWrapper>

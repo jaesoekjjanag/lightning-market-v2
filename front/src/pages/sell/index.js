@@ -11,7 +11,7 @@ const Sell = () => {
     <div>
       <SellMenu />
       <Switch>
-        <Route path='/sell/Register' component={Register}/>
+        <Route path='/sell/register' component={Register}/>
         <Route path='/sell/manage' component={Manage} />
       </Switch>
     </div>
