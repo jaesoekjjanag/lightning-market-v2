@@ -2,7 +2,7 @@ import React from 'react'
 import ImgBlockGrid from './ImgBlockGrid';
 // import Footer from '../../components/Footer';
 import Header from '../../components/header';
-import Carousel from './carousel';
+import Carousel from './Carousel';
 
 const Main = () => {
   return (
