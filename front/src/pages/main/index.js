@@ -1,14 +1,14 @@
 import React from 'react'
 import ImgBlockGrid from './ImgBlockGrid';
-// import Footer from '../CommonPage/Footer';
+// import Footer from '../../components/Footer';
 import Header from '../../components/header';
-// import Carousel from './components/carousel';
+import Carousel from './carousel';
 
 const Main = () => {
   return (
     <React.Fragment>
       <Header />
-      {/* <Carousel /> */}
+      <Carousel />
       <ImgBlockGrid />
       {/* <Footer /> */}
     </React.Fragment>

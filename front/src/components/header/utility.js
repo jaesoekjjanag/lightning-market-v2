@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 
 
@@ -13,17 +13,24 @@ const UtilityList = styled.li`
     float:left;
     margin-left: 30px;
     position: relative;
+`
 
-    & > * {
-        color: black;
+export const LinkTagStyle = createGlobalStyle`
+    a{
+        text-decoration: none;
+        color:balck;
     }
-`;
 
+    a:visited{
+        color:black;
+    }
+`
 
 const Utility = () => {
 
     return <React.Fragment>
         <StyledUtility>
+            <LinkTagStyle />
             <UtilityList className="utilityAfter">
                 <Link to='/sell'>판매하기</Link>
             </UtilityList>

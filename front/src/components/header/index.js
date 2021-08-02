@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Logo from './logo'
 // import Search from './search'
 import Utility from './utility'
@@ -17,8 +17,6 @@ const StyledHeader = styled.header`
 `;
 
 const StyledDiv = styled.div`
-    width:1024px;
-    margin: 0 auto;
     align-items: center;
     display: flex;
     justify-content: space-between;

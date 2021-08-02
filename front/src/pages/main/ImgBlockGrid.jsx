@@ -7,10 +7,7 @@ const ImagesWrapper = styled.div`
   grid-template-columns:repeat(5,1fr);
   grid-template-rows: repeat(5, 1fr);
   gap:8px;
-  border-color:;
-  width: 1024px;
   height: 1400px;
-  margin: 0 auto;
   padding-top: 100px;
 `
 // const Imgs = styled.div`
