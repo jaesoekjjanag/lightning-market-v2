@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 
 
@@ -22,12 +22,12 @@ const StyledLogoImg = styled.img`
 const Logo = () => {
 
     return <React.Fragment>
-        <Link to='/'>
-            <StyledLogoBox>
-                <StyledLogoImg src="thunder.png" alt="로고 이미지" />
-                벼락장터
-            </StyledLogoBox>
-        </Link>
+        {/* <Link to='/'> */}
+        <StyledLogoBox>
+            <StyledLogoImg src="thunder.png" alt="로고 이미지" />
+            벼락장터
+        </StyledLogoBox>
+        {/* </Link> */}
     </React.Fragment>
 }
 

@@ -3,7 +3,7 @@ import { HashRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Post from './Post';
 import Manage from './Manage';
-// import Header from '../CommonPage/header';
+import Header from '../../components/header';
 
 const SellPageWrapper = styled.div`
   margin: 0 auto;
@@ -15,7 +15,7 @@ const Sell = () => {
   return (
     <Router>
       <React.Fragment>
-        {/* <Header /> */}
+        <Header />
         <SellPageWrapper className="wrapper">
           <ul>
             <li><Link to='/sell/post'>상품등록</Link></li>

@@ -22,11 +22,14 @@ const UtilityList = styled.li`
 
 const Utility = () => {
 
-
     return <React.Fragment>
         <StyledUtility>
-            <UtilityList className="utilityAfter"><Link to='/sell'>판매하기</Link></UtilityList>
-            <UtilityList className="utilityAfter"><Link to='/mypage'>내상점</Link></UtilityList>
+            <UtilityList className="utilityAfter">
+                <Link to='/sell'>판매하기</Link>
+            </UtilityList>
+            <UtilityList className="utilityAfter">
+                <Link to='/myshop'>내상점</Link>
+            </UtilityList>
             <UtilityList><button>벼락톡</button></UtilityList>
         </StyledUtility>
     </React.Fragment >

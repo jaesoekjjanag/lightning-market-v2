@@ -1,5 +1,5 @@
 import React from 'react'
-import ProductRegister from '../ProductRegister';
+import ProductRegister from './ProductRegister';
 
 const Post = ({ props }) => {
   console.log(props)
