@@ -1,17 +1,13 @@
 import React from 'react'
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
-import Header from '../../components/header';
+import { Route } from 'react-router-dom'
+import TabLayout from './layout/TabLayout'
 
-// import Header from '../CommonPage/header';
-// import CategoryBar from '../CommonPage/categoryBar';
-
-
-const MyShop = ({ isLoggedIn }) => {
+const MyShop = () => {
   return (
-    <React.Fragment>
-      <Header />
-      <h1>My Page</h1>
-    </React.Fragment>
+    <TabLayout>
+      {/* <Route exact path='/myshop' component={Tab} /> */}
+      {/* <Route path='/myshop/:tab' component={Tab} /> */}
+    </TabLayout>
   )
 }
 

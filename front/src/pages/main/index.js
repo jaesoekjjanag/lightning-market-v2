@@ -1,16 +1,25 @@
 import React from 'react'
 import ImgBlockGrid from './ImgBlockGrid';
-// import Footer from '../../components/Footer';
-import Header from '../../components/header';
 import Carousel from './Carousel';
+import Layout from '../../components/Layout';
+import { createGlobalStyle } from 'styled-components';
+export const LinkTagStyle = createGlobalStyle`
+    a{
+        text-decoration: none;
+        color:balck;
+    }
 
+    a:visited{
+        color:black;
+    }
+`
 const Main = () => {
   return (
     <React.Fragment>
-      <Header />
-      <Carousel />
-      <ImgBlockGrid />
-      {/* <Footer /> */}
+      <Layout>
+        <Carousel />
+        <ImgBlockGrid />
+      </Layout>
     </React.Fragment>
   )
 }

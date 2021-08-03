@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { LinkTagStyle } from './utility';
 
 
 
@@ -23,7 +22,6 @@ const StyledLogoImg = styled.img`
 const Logo = () => {
 
     return <React.Fragment>
-        <LinkTagStyle />
         <Link to='/'>
             <StyledLogoBox>
                 <StyledLogoImg src="thunder.png" alt="로고 이미지" />

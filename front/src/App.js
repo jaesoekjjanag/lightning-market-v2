@@ -1,7 +1,6 @@
 import React from 'react'
 import Main from './pages/main'
 import Myshop from './pages/myshop'
-// import Login from './pages/login'
 import Sell from './pages/sell'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
@@ -17,7 +16,6 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path='/' component={Main} />
-          {/* <Route exact path='/login' component={Login} /> */}
           <Route path='/myshop' component={Myshop} />
           <Route path='/sell' component={Sell} />
         </Switch>

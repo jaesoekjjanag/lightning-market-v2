@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, memo } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import styled from 'styled-components';
 
 
@@ -6,6 +6,7 @@ const UpDownBtn = styled.span`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  text-align:center;
   `
 
 const UpBtn = styled.span`

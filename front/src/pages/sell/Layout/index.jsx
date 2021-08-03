@@ -1,7 +1,7 @@
 import React from 'react'
-import Header from '../../components/header';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Layout from '../../../components/Layout';
 
 const SellPageWrapper = styled.div`
   border: 0.1px solid black;
@@ -20,12 +20,14 @@ const SellPageWrapper = styled.div`
 const SellMenu = ({ children }) => {
   return (
     <div>
-      <Header />
-      <SellPageWrapper className="wrapper">
-        <div><Link to='/sell/register'>상품등록</Link></div>
-        <div><Link to='/sell/manage'>상품관리</Link></div>
-        <div><Link to='/sell/history' >구매/판매 내역</Link></div>
-      </SellPageWrapper>
+      <Layout>
+        <SellPageWrapper className="wrapper">
+          <div><Link to='/sell/register'>상품등록</Link></div>
+          <div><Link to='/sell/manage'>상품관리</Link></div>
+          <div><Link to='/sell/history' >구매/판매 내역</Link></div>
+        </SellPageWrapper>
+        {children}
+      </Layout>
     </div>
   )
 }
