@@ -15,33 +15,39 @@ body {
   
 a {
     text-decoration: none;
-  }
+}
   
-  li {
-    list-style: none;
-  }
-  
-  .utilityAfter::after {
-    content: "";
-    width: 1px;
-    height: 10px;
-    border-right: 1px solid rgb(204,204,204);
-    position: absolute;
-    top: 8px;
-    right: -15px;
-  }
-  
-  .blind {
-    position: absolute;
-    clip: rect(0 0 0 0);
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-  }
-  
-  .titlePadding {
-    padding-top: 8px;
-  }
+li {
+  list-style: none;
+}
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.utilityAfter::after {
+  content: "";
+  width: 1px;
+  height: 10px;
+  border-right: 1px solid rgb(204,204,204);
+  position: absolute;
+  top: 8px;
+  right: -15px;
+}
+
+.blind {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+
+.titlePadding {
+  padding-top: 8px;
+}
   
   

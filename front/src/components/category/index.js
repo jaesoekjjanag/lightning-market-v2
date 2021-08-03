@@ -19,7 +19,7 @@ const StyledUl = styled.ul`
     justify-content: space-around;
     list-style:none;
 `
-let categories = {
+const categories = {
     전자제품: ['전자제품1', '전자제품2', '전자제품3'],
     의류: ['의류1', '의류2', '의류3'],
     애완용품: ['애완용품1', '애완용품2', '애완용품3'],
