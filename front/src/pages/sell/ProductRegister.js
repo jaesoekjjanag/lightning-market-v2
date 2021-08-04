@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import DaumPost from './DaumPost'
 // import PopupDom from './PopupDom';
 import PopupState from './PopupState'
-import {addrPopup} from '../../reducer/index'
+import { addrPopup } from '../../reducer/index'
 
 
 const RegisterWrapDiv = styled.section`
@@ -173,6 +173,16 @@ const Register = () => {
     // 상품등록시 제목 길이가 2보다 작을경우 메세지 출력
     const [productWarnMsg, setproductWarnMsg] = useState(false);
 
+    //상품 상태
+    const onClickState = (e) => {
+        console.log(e.currentTarget.value)
+    }
+
+    //교환 가능 여부
+    const onClickExchange = (e) => {
+        console.log(e.currentTarget.value)
+    }
+
     // 상품등록시 제목 길이 계산
     const charLength = (e) => {
         // setproductTitleLen(e.target.value.length);
@@ -182,6 +192,7 @@ const Register = () => {
             setproductWarnMsg(false);
         }
     };
+
 
     // 카테고리
     const categories = {
@@ -232,8 +243,8 @@ const Register = () => {
         } else if (e.target.value.length >= 3) {
             setCostWarningMsg(false);
         }
-    } 
-    
+    }
+
 
     
     return <React.Fragment>
@@ -305,10 +316,10 @@ const Register = () => {
                     </InfoSubTitle>
                     <div>
                         <RadioLeft htmlFor="중고상품">
-                            <input type="radio" id="중고상품" name="상태" checked/>중고상품
+                            <input onClick={onClickState} type="radio" id="중고상품" value='old' name="상태" checked />중고상품
                         </RadioLeft>
                         <label htmlFor="새상품">
-                            <input type="radio" id="새상품" name="상태"/>새상품
+                            <input onClick={onClickState} type="radio" id="새상품" value='new' name="상태" />새상품
                         </label>
                     </div>
                 </InfoLi>
@@ -319,10 +330,10 @@ const Register = () => {
                     </InfoSubTitle>
                     <div>
                         <RadioLeft htmlFor="교환불가">
-                            <input type="radio" id="교환불가" name="교환" checked/>교환불가
+                            <input onClick={onClickExchange} type="radio" value='no' id="교환불가" name="교환" checked />교환불가
                         </RadioLeft>
                         <label htmlFor="교환가능">
-                            <input type="radio" id="교환가능" name="교환"/>교환가능
+                            <input onClick={onClickExchange} type="radio" value='yes' id="교환가능" name="교환" />교환가능
                         </label>
                     </div>
                 </InfoLi>
