@@ -51,7 +51,7 @@ const Product = styled.div`
     display: flex;
     align-items: center;
 `
-const ProductTitleWrap = styled.div`
+const productTitleWrap = styled.div`
     display:flex;
     width: 100%;
     align-items: center;
@@ -66,7 +66,7 @@ const ProductTitle = styled.input`
         outline: 1px solid black;
     }
 `
-const ProductWarning = styled.div`
+const WarningMsg = styled.div`
     color: rgb(245, 126, 0);
     font-size: 14px;
     margin-top: 0.5rem;
@@ -147,9 +147,20 @@ const AddressInput = styled.input`
     outline: none;
     font-size: 14px;
 `
-
 const RadioLeft = styled.label`
     margin-right: 32px;
+`
+const CostInput = styled.input`
+    width: 240px;
+    height: 3rem;
+    box-sizing: border-box;
+    padding: 0px 1rem;
+    margin-right: 1rem;
+    font-size: 1rem;
+`
+
+const CostCheckBox = styled.div`
+    margin-top: 1rem;
 `
 
 
@@ -159,16 +170,16 @@ const Register = () => {
     // 상품등록시 제목 길이
     const [productTitleLen, setproductTitleLen] = useState(0);
 
-    // 상품등록시 제목 길이가 2보다 작을경우 출력할 메세지
-    const [warningMsg, setWarningMsg] = useState(false);
+    // 상품등록시 제목 길이가 2보다 작을경우 메세지 출력
+    const [productWarnMsg, setproductWarnMsg] = useState(false);
 
     // 상품등록시 제목 길이 계산
     const charLength = (e) => {
-        setproductTitleLen(e.target.value.length);
+        // setproductTitleLen(e.target.value.length);
         if (e.target.value.length < 2) {
-            setWarningMsg(true);
+            setproductWarnMsg(true);
         } else {
-            setWarningMsg(false);
+            setproductWarnMsg(false);
         }
     };
 
@@ -207,16 +218,24 @@ const Register = () => {
         console.log(isPopupOpen)
     };
 
-    // 가격에 입력한 값 데이터타입
-    const costDataType = (e) => {
+    
+    // 가격이 100원 미만일경우 메세지 출력
+    const [costWarningMsg, setCostWarningMsg] = useState(false);
+
+    // 가격에 입력한 값 데이터타입 & 길이 확인
+    const costData = (e) => {
         if (isNaN(e.target.value)) {
             alert('숫자를 입력하세요');
             e.target.value = ""
+        } else if (e.target.value.length <3) {
+            setCostWarningMsg(true);
+        } else if (e.target.value.length >= 3) {
+            setCostWarningMsg(false);
         }
     } 
     
 
-
+    
     return <React.Fragment>
         <RegisterWrapDiv>
             <InfoTitle>
@@ -238,16 +257,16 @@ const Register = () => {
                     </InfoSubTitle>
                     <ProductWrap>
                         <Product>
-                            <ProductTitleWrap>
+                            <productTitleWrap>
                                 <ProductTitle type="text" placeholder="상품 제목을 입력해주세요." maxLength="40" onInput={charLength} />
-                            </ProductTitleWrap>
+                            </productTitleWrap>
                             <CharNumber>
                                 {productTitleLen}/40
                             </CharNumber>
                         </Product>
-                        <ProductWarning activate={warningMsg} >
+                        <WarningMsg activate={productWarnMsg} >
                             상품명을 2자 이상 입력해주세요.
-                        </ProductWarning>
+                        </WarningMsg>
                     </ProductWrap>
                 </InfoLi>
                 <InfoLi>
@@ -314,17 +333,18 @@ const Register = () => {
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
                     <div>
-                        <div>
-                            <input type="text" placeholder="숫자만 입력해주세요." onInput={costDataType}/>원
-                            <div>
-                                <RadioLeft htmlFor="배송비포함">
-                                    <input type="checkbox" id="배송비포함"/>배송비포함
-                                </RadioLeft>
-                                <label htmlFor="가격협의 가능">
-                                    <input type="checkbox" id="가격협의 가능"/>가격협의 가능
-                                </label>
-                            </div>
-                        </div>
+                        <CostInput type="text" placeholder="숫자만 입력해주세요." onInput={costData}/>원
+                        <WarningMsg activate={costWarningMsg} >
+                            100원 이상 입력해주세요.
+                        </WarningMsg>
+                        <CostCheckBox>
+                            <RadioLeft htmlFor="배송비포함">
+                                <input type="checkbox" id="배송비포함"/>배송비포함
+                            </RadioLeft>
+                            <label htmlFor="가격협의 가능">
+                                <input type="checkbox" id="가격협의 가능"/>가격협의 가능
+                            </label>
+                        </CostCheckBox>
                     </div>
                 </InfoLi>
 

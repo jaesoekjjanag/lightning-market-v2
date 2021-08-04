@@ -42,7 +42,6 @@ const PopupState = () => {
     // 팝업창 상태 관리
     const isPopupOpen = useSelector(state => state.addrPopup)
 
-
     // 팝업창 닫기
     const closePopup = () => {
         dispatch(addrPopup(false))
@@ -50,7 +49,7 @@ const PopupState = () => {
 
 
     return <React.Fragment>
-        <StyledPopup id="popupDom" activate={isPopupOpen}>
+        <StyledPopup id="popupWrap" activate={isPopupOpen}>
             
             {isPopupOpen && (
                 <PopupDom>
