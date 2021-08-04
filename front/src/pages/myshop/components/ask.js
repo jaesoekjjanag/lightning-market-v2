@@ -32,7 +32,7 @@ const Ask = () => {
       <input type="textarea" maxLength="100" />
       <div>
         <span>n/100</span>
-        <span>입력</span>
+        <span><button>입력</button></span>
       </div>
     </Form>
   )
