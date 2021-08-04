@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import {useSelector, useDispatch} from 'react-redux';
-import {productWarningMsg} from '../../reducer/index';
+import { useSelector, useDispatch } from 'react-redux';
+import { productWarningMsg } from '../../reducer/index';
 import DaumPostcode from 'react-daum-postcode';
 
 
@@ -9,7 +9,6 @@ const RegisterWrapDiv = styled.section`
     margin: 0 auto;
     width: 1024px;
 `
-
 const InfoTitle = styled.h2`
     height: 100px;
     font-size: 26px;
@@ -18,24 +17,20 @@ const InfoTitle = styled.h2`
     border-bottom: 2px solid rgb(30,29,41);
     font-weight: 400;
 `
-
 const RequiredInfo = styled.span`
     color: rgb(255, 80, 88);
     font-size: 1rem;
     margin-left: 2rem;
 `
-
 const InfoWrap = styled.ul`
     padding-top: 0.5rem;
 `
-
 const InfoLi = styled.li`
     width: 100%;
     display: flex;
     padding: 2rem 0;
     border-bottom: 1px solid rgb(220, 219, 228);
 `
-
 const InfoSubTitle = styled.div`
     width: 10.5rem;
     font-size: 18px;
@@ -57,7 +52,6 @@ const ProductTitleWrap = styled.div`
     width: 100%;
     align-items: center;
 `
-
 const ProductTitle = styled.input`
     height: 3rem;
     padding: 0px 1rem;
@@ -68,7 +62,6 @@ const ProductTitle = styled.input`
         outline: 1px solid black;
     }
 `
-
 const ProductWarning = styled.div`
     color: rgb(245, 126, 0);
     font-size: 14px;
@@ -80,7 +73,6 @@ const ProductWarning = styled.div`
         return activate ? 'display: flex' : 'display: none';
     }}
 `
-
 const CharNumber = styled.div`
     margin-left: 1.5rem;
     font-size: 1rem;
@@ -127,7 +119,7 @@ const CategoryBtn = styled.button`
     &:hover {
         background: rgb(244, 244, 250);
     }
-`  
+`
 
 const AddressWrap = styled.div`
     flex: 1 1 0%
@@ -157,11 +149,11 @@ const AddressInput = styled.input`
 `
 
 
-const Register = ()=> {
+const Register = () => {
     const dispatch = useDispatch();
     const warningMsg = useSelector(state => state.productWarningMsg);
 
-    const [productTitleLength, setproductTitleLength] = React.useState(0);
+    const [productTitleLength, setproductTitleLength] = useState(0);
 
     const charLength = (e) => {
         setproductTitleLength(e.target.value.length);
@@ -226,7 +218,7 @@ const Register = ()=> {
                     <ProductWrap>
                         <Product>
                             <ProductTitleWrap>
-                                <ProductTitle type="text" placeholder="상품 제목을 입력해주세요." maxLength="40" onInput={charLength}/>
+                                <ProductTitle type="text" placeholder="상품 제목을 입력해주세요." maxLength="40" onInput={charLength} />
                             </ProductTitleWrap>
                             <CharNumber>
                                 {productTitleLength}/40
@@ -261,11 +253,10 @@ const Register = ()=> {
                     <AddressWrap>
                         <AddressBtn>내 위치</AddressBtn>
                         <AddressBtn onClick={hhh}>위치 검색</AddressBtn>
-   
                         <AddressInput readOnly placeholder="선호 거래 지역을 검색해주세요."></AddressInput>
                     </AddressWrap>
                 </InfoLi>
-                
+
             </InfoWrap>
 
         </RegisterWrapDiv>

@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import StyledLi from './StyledLi';
 
 const StyledWrapDiv = styled.div`

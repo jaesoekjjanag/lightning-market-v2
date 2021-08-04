@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 
 const WrapperDiv = styled.div`
@@ -23,6 +23,7 @@ const WrapperDiv = styled.div`
     display:block;
     bottom: -700%;
     opacity: 1;
+
     &>li:first-child{
     padding-top:2.5rem;
     }

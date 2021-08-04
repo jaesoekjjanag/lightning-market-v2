@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const StyledLogoBox = styled.span`
     font-size: 1.7rem;
     font-weight: bold;
-    color: #FFF001;
+    color: var(--main-yellow);
 `;
 
 const StyledLogoImg = styled.img`

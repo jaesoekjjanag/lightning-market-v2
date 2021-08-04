@@ -24,7 +24,7 @@ const Utility = () => {
                 <Link to='/sell/register'>판매하기</Link>
             </UtilityList>
             <UtilityList className="utilityAfter">
-                <Link to='/myshop'>내상점</Link>
+                <Link to='/myshop/product'>내상점</Link>
             </UtilityList>
             <UtilityList><button>벼락톡</button></UtilityList>
         </StyledUtility>
