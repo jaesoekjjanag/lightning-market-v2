@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { productWarningMsg } from '../../reducer/index';
-import DaumPostcode from 'react-daum-postcode';
+import {useSelector, useDispatch} from 'react-redux';
+// import DaumPost from './DaumPost'
+// import PopupDom from './PopupDom';
+import PopupState from './PopupState'
+import {addrPopup} from '../../reducer/index'
 
 
 const RegisterWrapDiv = styled.section`
@@ -30,12 +32,14 @@ const InfoLi = styled.li`
     display: flex;
     padding: 2rem 0;
     border-bottom: 1px solid rgb(220, 219, 228);
+    line-height: 32px;
 `
 const InfoSubTitle = styled.div`
     width: 10.5rem;
+    height: 32px;
     font-size: 18px;
+}
 `
-
 const Asterisk = styled.span`
     color: rgb(255, 80, 88);
 `
@@ -101,14 +105,12 @@ const CategoryUl = styled.ul`
     height: 100%;
     padding: 0.5rem 0px;
 `
-
 const CategoryLi = styled.li`
     display: flex;
     width: 100%;
     height: 40px;
     align-items: center;
 `
-
 const CategoryBtn = styled.button`
     width: 100%;
     height: 100%;
@@ -120,11 +122,9 @@ const CategoryBtn = styled.button`
         background: rgb(244, 244, 250);
     }
 `
-
 const AddressWrap = styled.div`
     flex: 1 1 0%
 `
-
 const AddressBtn = styled.button`
     height: 3rem;
     width: 6.5rem;
@@ -138,7 +138,6 @@ const AddressBtn = styled.button`
         background: rgb(244, 244, 250);
     }
 `
-
 const AddressInput = styled.input`
     display: block;
     width: 100%;
@@ -146,24 +145,34 @@ const AddressInput = styled.input`
     margin-top: 1rem;
     padding: 0 1rem;
     outline: none;
+    font-size: 14px;
+`
+
+const RadioLeft = styled.label`
+    margin-right: 32px;
 `
 
 
 const Register = () => {
     const dispatch = useDispatch();
-    const warningMsg = useSelector(state => state.productWarningMsg);
 
-    const [productTitleLength, setproductTitleLength] = useState(0);
+    // 상품등록시 제목 길이
+    const [productTitleLen, setproductTitleLen] = useState(0);
 
+    // 상품등록시 제목 길이가 2보다 작을경우 출력할 메세지
+    const [warningMsg, setWarningMsg] = useState(false);
+
+    // 상품등록시 제목 길이 계산
     const charLength = (e) => {
-        setproductTitleLength(e.target.value.length);
+        setproductTitleLen(e.target.value.length);
         if (e.target.value.length < 2) {
-            dispatch(productWarningMsg(true));
+            setWarningMsg(true);
         } else {
-            dispatch(productWarningMsg(false));
+            setWarningMsg(false);
         }
     };
 
+    // 카테고리
     const categories = {
         전자제품: ['전자제품1', '전자제품2', '전자제품3'],
         의류: ['의류1', '의류2', '의류3'],
@@ -175,6 +184,7 @@ const Register = () => {
         식물: ['식물1', '식물2', '식물3'],
     };
 
+    // 카테고리 대분류
     let majorCategories = []
 
     for (let i in categories) {
@@ -186,15 +196,26 @@ const Register = () => {
             </CategoryLi>)
     };
 
+    // 입력한 주소값 가져오기
+    const addr = useSelector(state => state.address);
 
-    const findAddress = (data) => {
-        let addr = `${data.sido} ${data.sigungu} ${data.bname}`
-        console.log(addr)
+    // 팝업창 열기
+    const isPopupOpen = useSelector(state => state.addrPopup);
+
+    const openPopup = () => {
+        dispatch(addrPopup(true))
+        console.log(isPopupOpen)
     };
 
-    const hhh = () => {
-        return <DaumPostcode onComplete={findAddress}></DaumPostcode>
-    }
+    // 가격에 입력한 값 데이터타입
+    const costDataType = (e) => {
+        if (isNaN(e.target.value)) {
+            alert('숫자를 입력하세요');
+            e.target.value = ""
+        }
+    } 
+    
+
 
     return <React.Fragment>
         <RegisterWrapDiv>
@@ -221,7 +242,7 @@ const Register = () => {
                                 <ProductTitle type="text" placeholder="상품 제목을 입력해주세요." maxLength="40" onInput={charLength} />
                             </ProductTitleWrap>
                             <CharNumber>
-                                {productTitleLength}/40
+                                {productTitleLen}/40
                             </CharNumber>
                         </Product>
                         <ProductWarning activate={warningMsg} >
@@ -252,9 +273,73 @@ const Register = () => {
                     </InfoSubTitle>
                     <AddressWrap>
                         <AddressBtn>내 위치</AddressBtn>
-                        <AddressBtn onClick={hhh}>위치 검색</AddressBtn>
-                        <AddressInput readOnly placeholder="선호 거래 지역을 검색해주세요."></AddressInput>
+                        <AddressBtn onClick={openPopup}>위치 검색</AddressBtn>
+                        <PopupState></PopupState>
+                        <AddressInput readOnly placeholder="선호 거래 지역을 검색해주세요." value={addr}></AddressInput>
                     </AddressWrap>
+                </InfoLi>
+
+                <InfoLi>
+                    <InfoSubTitle>
+                        상태
+                        <Asterisk>*</Asterisk>
+                    </InfoSubTitle>
+                    <div>
+                        <RadioLeft htmlFor="중고상품">
+                            <input type="radio" id="중고상품" name="상태" checked/>중고상품
+                        </RadioLeft>
+                        <label htmlFor="새상품">
+                            <input type="radio" id="새상품" name="상태"/>새상품
+                        </label>
+                    </div>
+                </InfoLi>
+                <InfoLi>
+                    <InfoSubTitle>
+                        교환
+                        <Asterisk>*</Asterisk>
+                    </InfoSubTitle>
+                    <div>
+                        <RadioLeft htmlFor="교환불가">
+                            <input type="radio" id="교환불가" name="교환" checked/>교환불가
+                        </RadioLeft>
+                        <label htmlFor="교환가능">
+                            <input type="radio" id="교환가능" name="교환"/>교환가능
+                        </label>
+                    </div>
+                </InfoLi>
+
+                <InfoLi>
+                    <InfoSubTitle>
+                        가격
+                        <Asterisk>*</Asterisk>
+                    </InfoSubTitle>
+                    <div>
+                        <div>
+                            <input type="text" placeholder="숫자만 입력해주세요." onInput={costDataType}/>원
+                            <div>
+                                <RadioLeft htmlFor="배송비포함">
+                                    <input type="checkbox" id="배송비포함"/>배송비포함
+                                </RadioLeft>
+                                <label htmlFor="가격협의 가능">
+                                    <input type="checkbox" id="가격협의 가능"/>가격협의 가능
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </InfoLi>
+
+                <InfoLi>
+                    <InfoSubTitle>
+                        설명
+                        <Asterisk>*</Asterisk>
+                    </InfoSubTitle>
+                </InfoLi>
+
+                <InfoLi>
+                    <InfoSubTitle>
+                        수량
+                        <Asterisk>*</Asterisk>
+                    </InfoSubTitle>
                 </InfoLi>
 
             </InfoWrap>
