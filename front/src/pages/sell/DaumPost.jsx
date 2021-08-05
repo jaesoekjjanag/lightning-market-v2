@@ -7,7 +7,7 @@ import { address } from '../../reducer/addressPopup';
 const PopupStyle = {
     background: "white",
     width: "400px",
-    height: "500px",
+    height: "465px",
 
 }
 

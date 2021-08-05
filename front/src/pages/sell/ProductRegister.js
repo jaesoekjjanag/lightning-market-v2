@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import DaumPost from './DaumPost'
 // import PopupDom from './PopupDom';
 import PopupState from './PopupState'
-import {address, addrPopup } from '../../reducer/addressPopup';
+import { addrPopup } from '../../reducer/addressPopup';
 
 const RegisterWrapDiv = styled.section`
     margin: 0 auto;
@@ -144,7 +144,7 @@ const AddressInput = styled.input`
 const RadioLeft = styled.label`
     margin-right: 32px;
 `
-const CostInput = styled.input`
+const NumberInput = styled.input`
     width: 240px;
     height: 3rem;
     box-sizing: border-box;
@@ -154,6 +154,39 @@ const CostInput = styled.input`
 `
 const CostCheckBox = styled.div`
     margin-top: 1rem;
+`
+const ProductInfoWrap = styled.div`
+    flex: 1 1 0%;
+`
+const ProductInfo = styled.textarea`
+    padding: 1rem;
+    resize: none;
+    font-size: 1rem;
+    width: 100%;
+`
+const RegisterFooter = styled.footer`
+    width: 100%;
+    height: 5.5rem;
+    background: rgb(250, 250, 253);
+`
+const RegisterBtnWrap = styled.div`
+    display: flex;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+`
+const RegisterBtn = styled.button`
+    height: 3.5rem;
+    width: 10rem;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    background-color: var(--main-yellow);
+    margin-right: 2rem;
 `
 
 
@@ -227,15 +260,29 @@ const Register = () => {
     // 가격에 입력한 값 데이터타입 & 길이 확인
     const costData = (e) => {
         if (isNaN(e.target.value)) {
-            alert('숫자를 입력하세요');
+            alert('숫자만 입력해주세요');
             e.target.value = ""
         } else if (e.target.value.length <3) {
             setCostWarningMsg(true);
         } else if (e.target.value.length >= 3) {
             setCostWarningMsg(false);
         }
-    }
+    };
 
+    // 상품등록시 설명 길이
+    const [productInfoLen, setProductInfoLen] = useState(0);
+
+    // 상품등록시 설명 길이 계산
+    const infoLength = (e) => {
+        setProductInfoLen(e.target.value.length);
+    };
+
+    const countData = (e) => {
+        if (isNaN(e.target.value)) {
+            alert('숫자만 입력해주세요');
+            e.target.value = ""
+        }
+    }
 
     
     return <React.Fragment>
@@ -334,7 +381,7 @@ const Register = () => {
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
                     <div>
-                        <CostInput type="text" placeholder="숫자만 입력해주세요." onInput={costData}/>원
+                        <NumberInput type="text" placeholder="숫자만 입력해주세요." onInput={costData}/>원
                         <WarningMsg activate={costWarningMsg} >
                             100원 이상 입력해주세요.
                         </WarningMsg>
@@ -354,6 +401,12 @@ const Register = () => {
                         설명
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
+                    <ProductInfoWrap>
+                        <ProductInfo placeholder="상품 설명을 적어주세요." rows="6" onInput={infoLength}></ProductInfo>
+                        <CharNumber>
+                            {productInfoLen}/2000
+                        </CharNumber>
+                    </ProductInfoWrap>
                 </InfoLi>
 
                 <InfoLi>
@@ -361,9 +414,17 @@ const Register = () => {
                         수량
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
+                    <div>
+                        <NumberInput type="text" placeholder="숫자만 입력해주세요." onInput={countData}/>개
+                    </div>
                 </InfoLi>
 
             </InfoWrap>
+            <RegisterFooter>
+                <RegisterBtnWrap>
+                    <RegisterBtn>등록하기</RegisterBtn>
+                </RegisterBtnWrap>
+            </RegisterFooter>
 
         </RegisterWrapDiv>
     </React.Fragment>

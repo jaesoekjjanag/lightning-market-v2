@@ -20,18 +20,26 @@ const StyledPopup = styled.div`
         return activate ? 'display: flex; flex-direction: column' : 'display: none';
     }}
 `
-const PopupCloseBtn = styled.button`
-    width: 402px;
-    height: 40px;
-    display: block;
+const PopupCloseBtnWrap = styled.div`
+    width: 400px;
+    height: 50px;
+    position: relative;
+    display: flex;
     background-color: white;
     box-sizing: border-box;
-    border: 1px solid black;
     font-weight: bold;
-    &:hover {
-        background: rgb(244, 244, 250);
-        cursor: pointer;
-    }
+    border-bottom: 1px solid black;
+    padding: 10px 15px;
+    align-items: center;
+    justify-content: space-between;
+`
+
+const PopupCloseBtn = styled.button`
+    // text-align: right;
+    // position: absolute;
+    // top: 27%;
+    // right: 4%;
+    border: none;
 `
 
 const PopupState = () => {
@@ -48,10 +56,13 @@ const PopupState = () => {
 
     return <React.Fragment>
         <StyledPopup id="popupWrap" activate={isPopupOpen}>
+            <PopupCloseBtnWrap>
+                <span >주소 찾기</span>
+                <PopupCloseBtn onClick={closePopup}><img width="22px" src="x.png" alt="closeButton" /></PopupCloseBtn>
+            </PopupCloseBtnWrap>
             {isPopupOpen && (
                 <DaumPost onClose={closePopup} />
             )}
-            <PopupCloseBtn onClick={closePopup}>닫기</PopupCloseBtn>
         </StyledPopup>
 
 
