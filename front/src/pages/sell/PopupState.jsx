@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PopupDom from './PopupDom';
 import DaumPost from './DaumPost';
 import { useSelector, useDispatch } from 'react-redux';
-// import DaumPostcode from 'react-daum-postcode';
 import { addrPopup } from '../../reducer/addressPopup'
 
 const StyledPopup = styled.div`
@@ -50,11 +48,8 @@ const PopupState = () => {
 
     return <React.Fragment>
         <StyledPopup id="popupWrap" activate={isPopupOpen}>
-
             {isPopupOpen && (
-                <PopupDom>
-                    <DaumPost onClose={closePopup} />
-                </PopupDom>
+                <DaumPost onClose={closePopup} />
             )}
             <PopupCloseBtn onClick={closePopup}>닫기</PopupCloseBtn>
         </StyledPopup>

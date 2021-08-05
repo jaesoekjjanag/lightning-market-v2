@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import DaumPost from './DaumPost'
 // import PopupDom from './PopupDom';
 import PopupState from './PopupState'
-import { addrPopup } from '../../reducer/addressPopup';
+import {address, addrPopup } from '../../reducer/addressPopup';
 
 const RegisterWrapDiv = styled.section`
     margin: 0 auto;
@@ -45,12 +45,7 @@ const Asterisk = styled.span`
 const ProductWrap = styled.div`
     flex: 1 1 0%
 `
-const Product = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-`
-const productTitleWrap = styled.div`
+const ProductTitleWrap = styled.div`
     display:flex;
     width: 100%;
     align-items: center;
@@ -157,7 +152,6 @@ const CostInput = styled.input`
     margin-right: 1rem;
     font-size: 1rem;
 `
-
 const CostCheckBox = styled.div`
     margin-top: 1rem;
 `
@@ -184,14 +178,13 @@ const Register = () => {
 
     // 상품등록시 제목 길이 계산
     const charLength = (e) => {
-        // setproductTitleLen(e.target.value.length);
+        setproductTitleLen(e.target.value.length);
         if (e.target.value.length < 2) {
             setproductWarnMsg(true);
         } else {
             setproductWarnMsg(false);
         }
     };
-
 
     // 카테고리
     const categories = {
@@ -218,15 +211,13 @@ const Register = () => {
     };
 
     // 입력한 주소값 가져오기
-    const addr = useSelector(state => state.address);
+    const addr = useSelector(state=>state.addressPopup.address)
 
     // 팝업창 열기
-    const isPopupOpen = useSelector(state => state.addrPopup);
 
     const openPopup = () => {
-        console.log(addrPopup)
+        console.log(addr)
         dispatch(addrPopup(true))
-        console.log(isPopupOpen)
     };
 
     
@@ -267,14 +258,12 @@ const Register = () => {
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
                     <ProductWrap>
-                        <Product>
-                            <productTitleWrap>
-                                <ProductTitle type="text" placeholder="상품 제목을 입력해주세요." maxLength="40" onInput={charLength} />
-                            </productTitleWrap>
+                        <ProductTitleWrap>
+                            <ProductTitle type="text" placeholder="상품 제목을 입력해주세요." maxLength="40" onInput={charLength} />
                             <CharNumber>
                                 {productTitleLen}/40
                             </CharNumber>
-                        </Product>
+                        </ProductTitleWrap>
                         <WarningMsg activate={productWarnMsg} >
                             상품명을 2자 이상 입력해주세요.
                         </WarningMsg>
