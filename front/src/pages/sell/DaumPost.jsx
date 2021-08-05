@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
-import {useSelector, useDispatch} from 'react-redux';
-import {address} from '../../reducer/index';
+import { useSelector, useDispatch } from 'react-redux';
+import { address } from '../../reducer/addressPopup';
 
 
 const PopupStyle = {
@@ -24,9 +24,9 @@ const DaumPost = (props) => {
 
 
     return <React.Fragment>
-            <DaumPostcode onComplete={findAddress} style={PopupStyle}></DaumPostcode>
-            
-        </React.Fragment>
+        <DaumPostcode onComplete={findAddress} style={PopupStyle}></DaumPostcode>
+
+    </React.Fragment>
 }
 
 export default DaumPost;

@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PopupDom from './PopupDom';
 import DaumPost from './DaumPost';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import DaumPostcode from 'react-daum-postcode';
-import {addrPopup} from '../../reducer/index'
+import { addrPopup } from '../../reducer/addressPopup'
 
 const StyledPopup = styled.div`
     position: fixed;
@@ -40,21 +40,21 @@ const PopupState = () => {
     const dispatch = useDispatch();
 
     // 팝업창 상태 관리
-    const isPopupOpen = useSelector(state => state.addrPopup)
+    const isPopupOpen = useSelector(state => state.addressPopup.addrPopup)
 
 
     // 팝업창 닫기
     const closePopup = () => {
         dispatch(addrPopup(false))
-    };  
+    };
 
 
     return <React.Fragment>
         <StyledPopup id="popupDom" activate={isPopupOpen}>
-            
+
             {isPopupOpen && (
                 <PopupDom>
-                    <DaumPost onClose={closePopup}/>
+                    <DaumPost onClose={closePopup} />
                 </PopupDom>
             )}
             <PopupCloseBtn onClick={closePopup}>닫기</PopupCloseBtn>

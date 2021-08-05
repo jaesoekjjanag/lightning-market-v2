@@ -3,6 +3,7 @@ import ImgBlockGrid from './ImgBlockGrid';
 import Carousel from './Carousel';
 import Layout from '../../components/Layout';
 import { createGlobalStyle } from 'styled-components';
+import Login from '../../components/Login';
 export const LinkTagStyle = createGlobalStyle`
     a{
         text-decoration: none;

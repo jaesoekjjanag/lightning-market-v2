@@ -4,8 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import DaumPost from './DaumPost'
 // import PopupDom from './PopupDom';
 import PopupState from './PopupState'
-import { addrPopup } from '../../reducer/index'
-
+import { addrPopup } from '../../reducer/addressPopup';
 
 const RegisterWrapDiv = styled.section`
     margin: 0 auto;
@@ -214,6 +213,7 @@ const Register = () => {
     const isPopupOpen = useSelector(state => state.addrPopup);
 
     const openPopup = () => {
+        console.log(addrPopup)
         dispatch(addrPopup(true))
         console.log(isPopupOpen)
     };
@@ -296,6 +296,7 @@ const Register = () => {
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
                     <div>
+
                         <RadioLeft htmlFor="중고상품">
                             <input onClick={onClickState} type="radio" id="중고상품" value='old' name="상태" checked />중고상품
                         </RadioLeft>

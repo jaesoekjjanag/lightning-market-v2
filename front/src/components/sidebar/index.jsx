@@ -11,7 +11,7 @@ const NavigationItems = styled.span`
   flex-direction: column;
   width: 7.7rem;
   position: absolute;
-  top:100%;
+  top:95%;
   right: calc(50% - 650px);
   z-index: 10;
   & > *{
