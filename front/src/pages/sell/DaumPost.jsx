@@ -17,7 +17,6 @@ const DaumPost = (props) => {
 
     const findAddress = (data) => {
         let addr = `${data.sido} ${data.sigungu} ${data.bname}`
-        console.log(addr);
         dispatch(address(addr))
         props.onClose();
     };
