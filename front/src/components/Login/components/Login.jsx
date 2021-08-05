@@ -10,12 +10,15 @@ const Buttons = styled.div`
       margin-bottom:5%;
     }
 `
-const Login = () => {
+const Login = ({ toggle }) => {
   return (
-    <Buttons>
-      <button>벼락장터 로그인</button>
-      <button>카카오로 로그인</button>
-    </Buttons>
+    <React.Fragment>
+      <Buttons>
+        <button>벼락장터 로그인</button>
+        <button>카카오로 로그인</button>
+      </Buttons>
+      <div>계정이 없으신가요? <span onClick={toggle}>회원가입</span></div>
+    </React.Fragment>
   )
 }
 

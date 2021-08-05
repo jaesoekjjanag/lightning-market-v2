@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { CLOSE } from '../../reducer/loginPopup'
@@ -41,9 +41,12 @@ const MainDiv = styled.div`
 
   & > div:last-child{
     text-align:right;
-    cursor:pointer;
 
-    &:hover span{
+    &>span{
+      cursor:pointer;
+    }
+
+    &>span:hover {
       text-decoration:underline;
     }
   }
@@ -51,13 +54,18 @@ const MainDiv = styled.div`
 `
 const Text = styled.div`
     text-align:center;
+    position:relative;
+    margin-top:70px;
+    
+
     & > *{
       padding-bottom:1rem;
     }
 
-    &  img{
-      width:35px;
-      height:35px;
+    &>div:first-child{
+      position:absolute;
+      top:-55px;
+      left:calc(50% - 17.5px);
     }
 
     & h5{
@@ -65,10 +73,24 @@ const Text = styled.div`
     }
 
 `
+const Img = styled.img`
+    width:35px;
+    height:35px;
+    cursor:pointer;
+    transform:${prop => prop.big && `scale(25)`};
+    margin-top:${prop => prop.big && `200px`};
+    
 
+
+    &:active{
+      transform: scale(1.2);
+    }
+`
 
 const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [big, setBig] = useState(false);
 
   const dispatch = useDispatch();
   const onCLickClose = () => {
@@ -77,26 +99,42 @@ const Login = () => {
     })
   }
 
-
   const onClickSignUp = () => {
     setIsSignUp(prev => !prev)
   }
 
+  const onClickModal = (e) => {
+    const lst = e.target.className.split(' ');
+    if (lst.includes('modal')) {
+      onCLickClose();
+    }
+  }
+
+  const ClickCount = () => {
+    setCounter(prev => (prev + 1))
+    if (counter === 9) {
+      setBig(true);
+    }
+    if (counter === 10) {
+      setCounter(0);
+      setBig(false)
+    }
+  }
+
   return (
-    <BackgroundDiv>
-      <MainDiv>
+    <BackgroundDiv className="modal" onClick={onClickModal}>
+      <MainDiv >
         <button onClick={onCLickClose}><img src="x.png" alt="closeButton" /></button>
         <Text>
-          <div><img src="thunder.ico" alt="thunderLogo" /></div>
+          <div onClick={ClickCount}><Img big={big} src="thunder.ico" alt="thunderLogo" /></div>
           <h3>벼락장터로 중고거래 시작하기</h3>
           <h5>간편하게 가입하고 상품을 확인하세요</h5>
         </Text>
         {isSignUp
-          ? <SignUp />
-          : <LoginButtons />}
-        <div>계정이 없으신가요? <span onClick={onClickSignUp}>회원가입</span></div>
+          ? <SignUp toggle={onClickSignUp} />
+          : <LoginButtons toggle={onClickSignUp} />}
       </MainDiv>
-    </BackgroundDiv>
+    </BackgroundDiv >
   )
 }
 
