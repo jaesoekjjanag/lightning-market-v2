@@ -9,6 +9,11 @@ const ImagesWrapper = styled.div`
   gap:8px;
   height: 1400px;
   padding-top: 100px;
+
+  @media(max-width:768px){
+    grid-template-columns:repeat(2, 1fr);
+    padding: 0 1vw;
+  }
 `
 // const Imgs = styled.div`
 //   border:1px solid black;

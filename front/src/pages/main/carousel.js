@@ -19,11 +19,29 @@ import "slick-carousel/slick/slick-theme.css";
 
 // export default Carousel;
 
-
 const WrapDiv = styled.div`
     width: 1024px;
     margin: 0 auto;
+
+  }
 `
+const ResponsiveSlider = styled(Slider)`
+@media(max-width:768px){
+  width:100vw;
+  height:30vh;
+
+  & img{
+    width:100vw;
+    height:30vh;
+  }
+}
+`
+
+// const Img = styled.img`
+// @media(max-width:768px){
+//   width:100vw;
+//   height:30vh;
+// `
 
 export default class Carousel extends Component {
   render() {
@@ -38,7 +56,7 @@ export default class Carousel extends Component {
     };
     return (
       <WrapDiv>
-        <Slider {...settings}>
+        <ResponsiveSlider {...settings}>
           <div>
             <img src="캐러셀1.jpg" alt="" width="1024px" height="300px" />
           </div>
@@ -49,7 +67,7 @@ export default class Carousel extends Component {
             <img src="캐러셀3.jpg" alt="" width="1024px" height="300px" />
           </div>
 
-        </Slider>
+        </ResponsiveSlider>
       </WrapDiv>
     );
   }

@@ -1,25 +1,33 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react'
+import Buttons from './Buttons'
+import Local from './Local'
 
-const Buttons = styled.div`
-    height:50%;
+const Login = ({ toggle, close }) => {
+  const [loginPlatform, setLoginPlatform] = useState();
 
-    &> *{
-      width:100%;
-      height: 20%;
-      margin-bottom:5%;
+  const onClickPlatform = (e) => {
+    const platform = e.currentTarget.value;
+    if (platform === 'local') {
+      setLoginPlatform('local')
     }
-`
-const Login = ({ toggle }) => {
-  return (
-    <React.Fragment>
-      <Buttons>
-        <button>벼락장터 로그인</button>
-        <button>카카오로 로그인</button>
-      </Buttons>
-      <div>계정이 없으신가요? <span onClick={toggle}>회원가입</span></div>
-    </React.Fragment>
-  )
+  }
+
+  if (!loginPlatform) {
+    return (
+      <React.Fragment>
+        <Buttons platform={onClickPlatform} />
+        <div>계정이 없으신가요? <span onClick={toggle}>회원가입</span></div>
+      </React.Fragment>
+    )
+  } else if (loginPlatform === 'local') {
+    return (
+      <React.Fragment>
+        <Local close={close} />
+        <div>계정이 없으신가요? <span onClick={toggle}>회원가입</span></div>
+      </React.Fragment>
+    )
+  }
+
 }
 
 export default Login

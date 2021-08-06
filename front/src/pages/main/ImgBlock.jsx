@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const BlockWrapper = styled.div`
   border:0.3px solid rgb(216, 214, 214)
+ 
 `
 const ItemImg = styled.img`
   height: 70%;

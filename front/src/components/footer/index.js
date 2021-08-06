@@ -9,6 +9,10 @@ const StyledFooter = styled.footer`
   border-top: 0.5px soLid rgb(216, 214, 214);
   border-bottom: 0.5px soLid rgb(216, 214, 214);
   margin-bottom: 100px;
+
+  @media(max-width:768px){
+    display:none;
+  }
 `
 const Ul = styled.ul`
   padding:0;
@@ -28,21 +32,19 @@ const Li = styled.li`
 
 const Footer = () => {
   return (
-    <>
-      <StyledFooter>
-        <Ul>
-          <Li>공지사항</Li>
-          <Li>FAQ</Li>
-          <Li>운영정책</Li>
-          <Li>1:1문의</Li>
-          <Li>사업자정보확인</Li>
-          <Li>이용약관</Li>
-          <Li>개인정보처리방침</Li>
-          <Li>청소년보호정책</Li>
-          <Li>위치기반서비스 이용약관</Li>
-        </Ul>
-      </StyledFooter>
-    </>
+    <StyledFooter>
+      <Ul>
+        <Li>공지사항</Li>
+        <Li>FAQ</Li>
+        <Li>운영정책</Li>
+        <Li>1:1문의</Li>
+        <Li>사업자정보확인</Li>
+        <Li>이용약관</Li>
+        <Li>개인정보처리방침</Li>
+        <Li>청소년보호정책</Li>
+        <Li>위치기반서비스 이용약관</Li>
+      </Ul>
+    </StyledFooter>
   )
 }
 

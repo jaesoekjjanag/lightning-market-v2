@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { LinkTagStyle } from '../../pages/main';
 import { POPUP } from '../../reducer/loginPopup';
+import { useSelector } from 'react-redux';
 
 const StyledUtility = styled.ul`
     list-style: none;
@@ -21,6 +22,7 @@ const Button = styled.button`
 `
 
 const Utility = () => {
+    const isLoggedIn = useSelector(state => state.user.isLoggedIn)
     const dispatch = useDispatch();
 
     const onClickLogin = () => {
@@ -38,7 +40,7 @@ const Utility = () => {
                 <Link to='/myshop/product'>내상점</Link>
             </UtilityList>
             <UtilityList><Button>벼락톡</Button></UtilityList>
-            <UtilityList><Button onClick={onClickLogin}>로그인</Button></UtilityList>
+            {isLoggedIn || <UtilityList><Button onClick={onClickLogin}>로그인</Button></UtilityList>}
         </StyledUtility>
     </React.Fragment >
 }

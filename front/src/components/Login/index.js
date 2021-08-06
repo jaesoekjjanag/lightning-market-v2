@@ -93,7 +93,7 @@ const Login = () => {
   const [big, setBig] = useState(false);
 
   const dispatch = useDispatch();
-  const onCLickClose = () => {
+  const onClickClose = () => {
     dispatch({
       type: CLOSE
     })
@@ -106,7 +106,7 @@ const Login = () => {
   const onClickModal = (e) => {
     const lst = e.target.className.split(' ');
     if (lst.includes('modal')) {
-      onCLickClose();
+      onClickClose();
     }
   }
 
@@ -124,15 +124,15 @@ const Login = () => {
   return (
     <BackgroundDiv className="modal" onClick={onClickModal}>
       <MainDiv >
-        <button onClick={onCLickClose}><img src="x.png" alt="closeButton" /></button>
+        <button onClick={onClickClose}><img src="x.png" alt="closeButton" /></button>
         <Text>
           <div onClick={ClickCount}><Img big={big} src="thunder.ico" alt="thunderLogo" /></div>
           <h3>벼락장터로 중고거래 시작하기</h3>
           <h5>간편하게 가입하고 상품을 확인하세요</h5>
         </Text>
         {isSignUp
-          ? <SignUp toggle={onClickSignUp} />
-          : <LoginButtons toggle={onClickSignUp} />}
+          ? <SignUp toggle={onClickSignUp} close={onClickClose} />
+          : <LoginButtons toggle={onClickSignUp} close={onClickClose} />}
       </MainDiv>
     </BackgroundDiv >
   )

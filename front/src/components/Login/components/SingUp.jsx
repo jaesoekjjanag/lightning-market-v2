@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
 const Inputs = styled.form`
     height:60%;
@@ -28,36 +29,56 @@ const Inputs = styled.form`
       position:absolute
     }
 `
-const SignUp = ({ toggle }) => {
+const SignUp = ({ toggle, close }) => {
   const [checkMsg, setCheckMsg] = useState();
-  const [pswd, setPswd] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [check, setCheck] = useState('');
 
-  const onChangePswd = (e) => {
-    setPswd(e.currentTarget.value)
+  const onChangeEmail = (e) => {
+    setEmail(e.currentTarget.value)
+  }
+
+  const onChangePassword = (e) => {
+    setPassword(e.currentTarget.value)
   }
   const onChangeCheck = (e) => {
     setCheck(e.currentTarget.value)
   }
 
-
   useEffect(() => {
-    if (!pswd & !check) {
+    if (!password & !check) {
       setCheckMsg('6자 이상 영어, 숫자를 사용하세요.')
     }
-    else if (pswd === check) {
+    else if (password === check) {
       setCheckMsg('일치합니다.')
     } else {
       setCheckMsg('일치하지 않습니다.')
     }
-  }, [pswd, check])
+  }, [password, check])
+
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    if (password === check) {
+      try {
+        await axios.post('http://localhost:5000/user/signup', {
+          email,
+          password
+        })
+        e.target.reset();
+        close();
+      } catch (err) {
+        alert(err.response.data)
+      }
+    }
+  }
 
   return (
     <React.Fragment>
-      <Inputs>
-        <input type="email" placeholder='이메일을 입력하세요' />
-        <input type="password" placeholder='비밀번호를 입력하세요' onChange={onChangePswd} />
-        <input type="password" placeholder='비밀번호 확인' onChange={onChangeCheck} />
+      <Inputs onSubmit={onSubmitForm}>
+        <input type="email" name='email' placeholder='이메일을 입력하세요' onChange={onChangeEmail} />
+        <input type="password" name='password' placeholder='비밀번호를 입력하세요' onChange={onChangePassword} />
+        <input type="password" name='check' placeholder='비밀번호 확인' onChange={onChangeCheck} />
         <p>{checkMsg}</p>
         <button>가입하기</button>
       </Inputs>

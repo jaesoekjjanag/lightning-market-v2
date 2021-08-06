@@ -1,14 +1,21 @@
 import React from 'react'
 import Header from './header'
 import Footer from './footer'
+import styled from 'styled-components'
+
+const LayoutWrapper = styled.div`
+@media(max-width:768px){
+  width:100vw;
+}
+`
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <LayoutWrapper>
       <Header />
       {children}
       <Footer />
-    </div>
+    </LayoutWrapper>
   )
 }
 

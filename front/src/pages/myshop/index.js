@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom'
 import Tab from './layout/Tab'
 import Layout from '../../components/Layout'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
 
 const TopDiv = styled.div`
@@ -57,6 +58,7 @@ const BtmDiv = styled.div`
 
 
 const Router = () => {
+  const id = useSelector(state => state.user.userInfo?.id)
   return (
     <React.Fragment>
       <Layout>
@@ -64,7 +66,7 @@ const Router = () => {
           <div></div>
           <div>
             <div>
-              <span>상점~~~~</span>
+              <span>{id ? id : '상점'}</span>
               <button>상점 명 수정</button>
             </div>
             <div>
