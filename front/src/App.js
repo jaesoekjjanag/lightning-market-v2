@@ -10,9 +10,6 @@ import { useSelector } from 'react-redux'
 const PageWrapper = styled.div`
   width:1024px;
   margin: 0 auto;
-  @media(max-width:768px){
-    width:100vw;
-  }
 `
 
 const App = () => {

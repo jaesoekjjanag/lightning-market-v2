@@ -3,8 +3,10 @@ const app = express();
 const dotenv = require('dotenv')
 const morgan = require('morgan')
 const cors = require('cors')
-const userRouter = require('./routes/user')
 const mongoose = require('mongoose')
+const userRouter = require('./routes/user')
+const imageRouter = require('./routes/image')
+const postRouter = require('./routes/post')
 
 dotenv.config();
 app.set('port', process.env.PORT || 5000);
@@ -32,6 +34,8 @@ mongoose.connect(process.env.MONGO, {
 })
 
 app.use('/user', userRouter)
+app.use('/image', imageRouter)
+app.use('/post', postRouter)
 
 app.get('/', (req, res) => {
   res.send('hi')

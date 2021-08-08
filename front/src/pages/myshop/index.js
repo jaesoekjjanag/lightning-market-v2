@@ -48,7 +48,6 @@ const Textarea = styled.div`
   }
 `
 const BtmDiv = styled.div`
-  height: 300px;
   margin:30px 0;
 
   & h3 {

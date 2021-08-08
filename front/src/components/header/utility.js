@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { LinkTagStyle } from '../../pages/main';
 import { POPUP } from '../../reducer/loginPopup';
 import { useSelector } from 'react-redux';
+import Login from '../Login';
 
 const StyledUtility = styled.ul`
     list-style: none;
