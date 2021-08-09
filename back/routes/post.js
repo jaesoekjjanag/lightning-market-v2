@@ -28,6 +28,9 @@ router.post('/posts', async (req, res, next) => {
     console.error(err);
     return next(err)
   }
+})
 
+router.post('/image', async (req, res, next) => {
+  console.log(req.body);
 })
 module.exports = router;

@@ -10,10 +10,7 @@ import axios from 'axios'
 import { POPUP } from '../../reducer/loginPopup';
 import Login from '../../components/Login';
 
-const RegisterForm = styled.form`
-    margin: 0 auto;
-    width: 1024px;
-`
+
 const InfoTitle = styled.h2`
     height: 100px;
     font-size: 26px;
@@ -37,6 +34,7 @@ const InfoLi = styled.li`
     border-bottom: 1px solid rgb(220, 219, 228);
     line-height: 32px;
 `
+
 const InfoSubTitle = styled.div`
     width: 10.5rem;
     height: 32px;
@@ -191,6 +189,12 @@ const RegisterBtn = styled.button`
     outline: none;
     background-color: var(--main-yellow);
     margin-right: 2rem;
+    color:#4A4F5A;
+    // text-shadow: 0px 0px 2px gray;
+
+    &:hover{
+        box-shadow:  0 0 8px rgba(0, 0, 0, 0.1)
+    }
 `
 
 
@@ -308,19 +312,19 @@ const Register = ({ match, history }) => {
     }
 
     return <React.Fragment>
-        <RegisterForm onSubmit={onSubmitForm}>
-            <InfoTitle >
-                기본정보
-                <RequiredInfo>*필수항목</RequiredInfo>
-            </InfoTitle>
+        <InfoTitle >
+            기본정보
+            <RequiredInfo>*필수항목</RequiredInfo>
+        </InfoTitle>
+        <InfoLi style={{ position: "relative" }}>
+            <InfoSubTitle >
+                <span>상품이미지</span>
+                <Asterisk>*</Asterisk>
+            </InfoSubTitle>
+            <Image />
+        </InfoLi>
+        <form onSubmit={onSubmitForm}>
             <InfoWrap>
-                <InfoLi>
-                    <InfoSubTitle >
-                        상품이미지
-                        <Asterisk>*</Asterisk>
-                    </InfoSubTitle>
-                    <Image />
-                </InfoLi>
                 <InfoLi>
                     <InfoSubTitle className="titlePadding">
                         제목
@@ -447,7 +451,7 @@ const Register = ({ match, history }) => {
                     <RegisterBtn>등록하기</RegisterBtn>
                 </RegisterBtnWrap>
             </RegisterFooter>
-        </RegisterForm>
+        </form>
     </React.Fragment>
 
 
