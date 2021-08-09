@@ -25,14 +25,14 @@ router.post('/signup', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const info = await User.findOne({ email }, ['password'])
+    const info = await User.findOne({ email })
+    console.log(info)
     bcrypt.compare(password, info.password)
       .then((result) => {
         if (result == true) {
-          console.log(info._id)
           const token = jwt.sign(info._id.toString(), process.env.SECRET)
           res.cookie('auth', token)
-          res.status(200).json({ 'id': info._id })
+          res.status(200).json({ 'id': info._id, 'nickname': info.nickname, 'email': info.email })
         } else {
           return res.status(401).send('비밀번호 불일치')
         }
@@ -42,6 +42,21 @@ router.post('/login', async (req, res, next) => {
     res.status(401).send('존재하지 않는 계정입니다.');
     next(err);
   }
+})
+
+router.post('/nickname', async (req, res, next) => {
+  const { id, nickname } = req.body
+  console.log(id, nickname)
+  try {
+    const user = await User.findOne({ _id: id })
+    user.nickname = nickname;
+    user.save();
+    return res.status(200).send('닉네임 변경됨');
+  } catch (err) {
+    console.error(err);
+    return next(err)
+  }
+
 })
 
 module.exports = router;

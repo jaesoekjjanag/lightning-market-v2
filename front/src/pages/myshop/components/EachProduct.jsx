@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Blocks = styled.div`
   height:300px;
   width:180px;
-  border:1px solid black;
+  border:0.3px solid gray;
   display:inline-block;
   box-sizing:border-box;
 
@@ -30,7 +30,6 @@ const EachProduct = ({ data }) => {
   const seconds = Math.floor(duration / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60)
-  console.log(seconds, minutes, hours)
 
   let time = ''
 

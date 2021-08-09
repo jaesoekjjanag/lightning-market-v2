@@ -49,7 +49,7 @@ const PopupState = () => {
     const isPopupOpen = useSelector(state => state.addressPopup.addrPopup)
 
     // 팝업창 닫기
-    const closePopup = () => {
+    const closePopup = (e) => {
         dispatch(addrPopup(false))
     };
 

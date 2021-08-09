@@ -5,8 +5,13 @@ import axios from 'axios'
 const ImageBlock = styled.div`
   height:200px;
   width:200px;
-  background-color:lightgray;
+  background-color:#FAFAFD;
+  cursor:pointer;
+  border:0.1px solid lightgray;
 
+  &:hover{
+    box-shadow: inset 0 0 3px
+  }
 `
 
 const Image = () => {

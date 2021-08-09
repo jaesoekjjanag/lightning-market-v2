@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 // import DaumPost from './DaumPost'
 // import PopupDom from './PopupDom';
 import PopupState from './PopupState'
+import Image from './Image';
 import { addrPopup } from '../../reducer/addressPopup';
-import Image from './Image'
 import axios from 'axios'
+import { POPUP } from '../../reducer/loginPopup';
+import Login from '../../components/Login';
 
 const RegisterForm = styled.form`
     margin: 0 auto;
@@ -192,7 +194,7 @@ const RegisterBtn = styled.button`
 `
 
 
-const Register = () => {
+const Register = ({ match, history }) => {
     const dispatch = useDispatch();
 
     // 상품등록시 제목 길이
@@ -249,8 +251,8 @@ const Register = () => {
 
     // 팝업창 열기
 
-    const openPopup = () => {
-        console.log(addr)
+    const openPopup = (e) => {
+        e.preventDefault();
         dispatch(addrPopup(true))
     };
 
@@ -285,13 +287,15 @@ const Register = () => {
         }
     }
 
-    const id = useSelector(state => state.user.userInfo.id);
+    //사용자 id 불러오기
+    const { isLoggedIn, userInfo } = useSelector(state => state.user);
 
     const onSubmitForm = (e) => {
         e.preventDefault();
+        //form에 담아서 post
         const { title, address, condition, exchange, price, description, amount } = e.target
-        axios.post('http://localhost:5000/post', {
-            seller: id,
+        axios.post('/post', {
+            seller: userInfo.id,
             title: title.value,
             address: address.value,
             condition: condition.value,
@@ -300,8 +304,8 @@ const Register = () => {
             description: description.value,
             amount: amount.value
         })
+        history.goBack();
     }
-
 
     return <React.Fragment>
         <RegisterForm onSubmit={onSubmitForm}>
@@ -315,7 +319,7 @@ const Register = () => {
                         상품이미지
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
-                    {/* <Image /> */}
+                    <Image />
                 </InfoLi>
                 <InfoLi>
                     <InfoSubTitle className="titlePadding">
@@ -356,7 +360,7 @@ const Register = () => {
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
                     <AddressWrap>
-                        <AddressBtn>내 위치</AddressBtn>
+                        <AddressBtn onClick={(e) => e.preventDefault()}>내 위치</AddressBtn>
                         <AddressBtn onClick={openPopup}>위치 검색</AddressBtn>
                         <PopupState></PopupState>
                         <AddressInput name='address' readOnly placeholder="선호 거래 지역을 검색해주세요." value={addr}></AddressInput>
@@ -445,6 +449,8 @@ const Register = () => {
             </RegisterFooter>
         </RegisterForm>
     </React.Fragment>
+
+
 }
 
 export default Register;

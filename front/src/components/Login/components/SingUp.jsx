@@ -61,7 +61,7 @@ const SignUp = ({ toggle, close }) => {
     e.preventDefault();
     if (password === check) {
       try {
-        await axios.post('http://localhost:5000/user/signup', {
+        await axios.post('/user/signup', {
           email,
           password
         })

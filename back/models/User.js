@@ -15,6 +15,11 @@ const User = mongoose.Schema({
     type: String,
     required: false,
   },
+  nickname: {
+    type: String,
+    required: false,
+    default: Date.now() + '상점'
+  },
   phone: {
     type: Number,
     required: false,

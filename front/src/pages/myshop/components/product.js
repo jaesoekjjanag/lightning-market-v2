@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import EachProduct from './EachProduct'
 import axios from 'axios'
@@ -16,8 +16,7 @@ const Product = () => {
   useEffect(() => {
     const loadPost = async () => {
       try {
-        const res = await axios.post('http://localhost:5000/post/mypost', { id })
-        console.log(res.data)
+        const res = await axios.post('/post/mypost', { id })
         setMyPosts(res.data);
       } catch (err) {
         return console.log(err)
