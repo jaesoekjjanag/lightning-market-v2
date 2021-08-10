@@ -16,14 +16,15 @@ const SubWrap = styled.div`
 
 const Product = () => {
   return (
-    <Layout>
-      <MainWrap>
-        <SubWrap>
-          <Top/>
-          <Bottom/>
-        </SubWrap>
-      </MainWrap>
-    </Layout>
+    // <Layout>
+      
+    // </Layout>
+    <MainWrap>
+    <SubWrap>
+      <Top/>
+      <Bottom/>
+    </SubWrap>
+  </MainWrap>
   )
 }
 

@@ -25,6 +25,7 @@ button {
   background-color: transparent;
   cursor: pointer;
   outline: none;
+  border: none;
 }
 
 .utilityAfter::after {
@@ -48,6 +49,7 @@ button {
 
 .titlePadding {
   padding-top: 8px;
+
 }
   
   
