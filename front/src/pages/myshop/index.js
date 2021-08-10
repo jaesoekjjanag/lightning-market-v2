@@ -90,7 +90,7 @@ const BtmDiv = styled.div`
 `
 
 
-const Router = () => {
+const Router = ({ match }) => {
   //미완성
 
   const { id, nickname } = useSelector(state => state.user.userInfo && state.user.userInfo)

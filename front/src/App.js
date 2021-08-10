@@ -5,6 +5,7 @@ import Sell from './pages/sell'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import Login from './components/Login'
+import Product from './pages/product'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
@@ -24,6 +25,7 @@ const App = () => {
         <Router>
           <Switch>
             <Route exact path='/' component={Main} />
+            <Route path='/product/:id' component={Product} />
             <Route path='/myshop' component={Myshop} />
             <Route path='/sell' component={Sell} />
           </Switch>
