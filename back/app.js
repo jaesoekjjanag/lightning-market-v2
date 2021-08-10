@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
 const cors = require('cors')
@@ -13,6 +14,7 @@ app.set('port', process.env.PORT || 5000);
 
 
 app.use(morgan())
+app.use('/', express.static(path.join(__dirname, 'uploads')))
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cors({

@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { UPLOAD_IMAGES, uploadImages } from '../../reducer/post'
 
 const ImageForm = styled.form`
   width:840px;
@@ -80,6 +81,7 @@ const Image = () => {
   const [thumbnailImg, setThumbnailImg] = useState([])
   const [uploadImg, setUploadImg] = useState([])
   const { id } = useSelector(state => state.user.userInfo)
+  const dispatch = useDispatch();
 
   const imgRef = useRef();
   const onClickBlock = () => {
@@ -109,7 +111,9 @@ const Image = () => {
       imageForm.append('image', v)
     })
     const res = await axios.post('http://localhost:5000/post/image', imageForm)
-    console.log(res.data)
+    // console.log(Array.from(res.data));
+    const imagesName = uploadImages(Array.from(res.data));
+    dispatch(imagesName);
   }
 
   return (

@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname)
-    const basename = path.basename(file.originalname)
+    const basename = path.basename(file.originalname, ext)
     cb(null, basename + '_' + Date.now() + ext);
   }
 })
@@ -29,27 +29,38 @@ const storage = multer.diskStorage({
 // 3. multer의 storage 객체에 담음
 const upload = multer({ storage })
 
-router.post('/', (req, res, next) => {
-  // console.log(req.body)
-  const post = new Post(req.body);
-  post.save((err) => {
-    if (err) {
-      console.error(err);
-      return next(err)
-    }
-    return res.status(200).send('success')
-  })
+router.post('/', async (req, res, next) => {
+  try {
+    const post = new Post(req.body);
+    console.log(post);
+    await post.save((err) => {
+      if (err) {
+        console.error(err);
+        return next(err)
+      }
+      res.status(200).send(post)
+    })
+    // const images = await Promise.all(req.body.image.map(v => {
+    //   const image = new Image({ postId: post._id, src: v });
+    //   image.save((err) => { if (err) { console.error(err) } })
+    // }))
+  } catch (err) {
+    console.error(err);
+  }
 })
 
+//내 상점
 router.post('/mypost', async (req, res, next) => {
   const myPost = await Post.find({ seller: req.body.id }).sort({ createdAt: -1 })
   console.log(myPost)
   return res.json(myPost);
 })
 
+//메인화면
 router.post('/posts', async (req, res, next) => {
   try {
     const posts = await Post.find().limit(25).sort({ createdAt: -1 });
+    // console.log(posts)
     return res.status(200).json(posts);
   } catch (err) {
     console.error(err);

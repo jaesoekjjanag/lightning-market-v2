@@ -27,7 +27,6 @@ const ImgBlockGrid = () => {
       const posts = await axios.post('/post/posts')
       setPosts(posts.data);
     }
-
     loadPosts()
   }, [])
 
