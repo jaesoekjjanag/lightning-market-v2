@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { CLOSE } from '../../reducer/loginPopup'
@@ -13,6 +13,30 @@ const BackgroundDiv = styled.div`
   height:100vh;
   width:100vw;
   z-index:15;
+
+  &>div{
+    animation:${prop => prop.shake && `shake 0.2s`}} ;
+  }
+
+  @keyframes shake{
+    0%{
+      transform:translate(0);
+    }
+    20%{
+      transform:translate(-30px);
+    }
+    40%{
+      transform:translate(30px);
+    }
+    60%{
+      transform:translate(-15px);
+    }
+    80%{
+      transform:translate(15px);
+    }
+    100%{
+      transform:translate(0);
+    }
 `
 const MainDiv = styled.div`
   margin auto;
@@ -26,6 +50,9 @@ const MainDiv = styled.div`
   flex-direction:column;
   justify-content: space-between;
   border-radius:4px;
+  box-shadow: 0 0 15px 1px rgba(0,0,0,0.4);
+  
+  
 
   & >button{
     text-align:right;
@@ -91,6 +118,7 @@ const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [counter, setCounter] = useState(0);
   const [big, setBig] = useState(false);
+  const [shake, setShake] = useState(false);
 
   const dispatch = useDispatch();
   const onClickClose = () => {
@@ -121,9 +149,14 @@ const Login = () => {
     }
   }
 
+  const makeShake = () => {
+    setShake(p => !p)
+  }
+
+
   return (
-    <BackgroundDiv className="modal" onMouseDown={onClickModal}>
-      <MainDiv >
+    <BackgroundDiv className="modal" onMouseDown={onClickModal} shake={shake} onAnimationEnd={() => setShake(p => !p)}>
+      <MainDiv id="shake">
         <button onClick={onClickClose}><img src="x.png" alt="closeButton" /></button>
         <Text>
           <div onClick={ClickCount}><Img big={big} src="thunder.ico" alt="thunderLogo" /></div>
@@ -132,7 +165,7 @@ const Login = () => {
         </Text>
         {isSignUp
           ? <SignUp toggle={onClickSignUp} close={onClickClose} />
-          : <LoginButtons toggle={onClickSignUp} close={onClickClose} />}
+          : <LoginButtons toggle={onClickSignUp} close={onClickClose} shake={makeShake} />}
       </MainDiv>
     </BackgroundDiv >
   )

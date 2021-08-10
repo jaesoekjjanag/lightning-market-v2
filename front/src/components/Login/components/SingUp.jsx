@@ -34,6 +34,7 @@ const SignUp = ({ toggle, close }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [check, setCheck] = useState('');
+  const [pswdFocus, setPswdFocus] = useState(false);
 
   const onChangeEmail = (e) => {
     setEmail(e.currentTarget.value)
@@ -73,13 +74,17 @@ const SignUp = ({ toggle, close }) => {
     }
   }
 
+  const onFocusPswd = () => {
+    setPswdFocus(p => !p)
+  }
+
   return (
     <React.Fragment>
       <Inputs onSubmit={onSubmitForm}>
         <input type="email" name='email' placeholder='이메일을 입력하세요' onChange={onChangeEmail} />
-        <input type="password" name='password' placeholder='비밀번호를 입력하세요' onChange={onChangePassword} />
-        <input type="password" name='check' placeholder='비밀번호 확인' onChange={onChangeCheck} />
-        <p>{checkMsg}</p>
+        <input type="password" name='password' placeholder='비밀번호를 입력하세요' onChange={onChangePassword} onFocus={onFocusPswd} onBlur={onFocusPswd} />
+        <input type="password" name='check' placeholder='비밀번호 확인' onChange={onChangeCheck} onFocus={onFocusPswd} onBlur={onFocusPswd} />
+        <p>{pswdFocus && checkMsg}</p>
         <button>가입하기</button>
       </Inputs>
       <div>이미 계정이 있으신가요? <span onClick={toggle}>로그인</span></div>

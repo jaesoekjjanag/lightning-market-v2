@@ -21,7 +21,7 @@ const Inputs = styled.form`
 
 `
 
-const Local = ({ close }) => {
+const Local = ({ close, shake }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch();
@@ -38,8 +38,9 @@ const Local = ({ close }) => {
       e.target.reset();
       close();
     } catch (err) {
-      // alert(err.response.data)
-      console.log(err);
+      shake();
+      // alert(err)
+      // console.log(err);
     }
 
   }
@@ -48,7 +49,7 @@ const Local = ({ close }) => {
       <Inputs onSubmit={onSubmitLogin}>
         <input type="email" name='email' placeholder='이메일을 입력하세요' onChange={(e) => setEmail(e.currentTarget.value)} />
         <input type="password" name='password' placeholder='비밀번호를 입력하세요' onChange={(e) => setPassword(e.currentTarget.value)} />
-        <button><h4>로그인</h4></button>
+        <button ><h4>로그인</h4></button>
       </Inputs>
     </React.Fragment>
   )
