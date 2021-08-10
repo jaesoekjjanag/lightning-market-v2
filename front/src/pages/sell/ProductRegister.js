@@ -9,6 +9,7 @@ import { addrPopup } from '../../reducer/addressPopup';
 import axios from 'axios'
 import { POPUP } from '../../reducer/loginPopup';
 import Login from '../../components/Login';
+import { REMOVE_IMAGES } from '../../reducer/post';
 
 
 const InfoTitle = styled.h2`
@@ -294,12 +295,16 @@ const Register = ({ match, history }) => {
     //사용자 id 불러오기
     const { isLoggedIn, userInfo } = useSelector(state => state.user);
 
+    //업로드할 이미지 파일명 가져와서 json 형식으로 만들기
+    const image = useSelector(state => state.post.imagesName);
+
     const onSubmitForm = (e) => {
         e.preventDefault();
         //form에 담아서 post
         const { title, address, condition, exchange, price, description, amount } = e.target
         axios.post('/post', {
             seller: userInfo.id,
+            image: image,
             title: title.value,
             address: address.value,
             condition: condition.value,
@@ -308,6 +313,7 @@ const Register = ({ match, history }) => {
             description: description.value,
             amount: amount.value
         })
+        dispatch({ type: REMOVE_IMAGES })
         history.goBack();
     }
 
@@ -320,6 +326,8 @@ const Register = ({ match, history }) => {
             <InfoSubTitle >
                 <span>상품이미지</span>
                 <Asterisk>*</Asterisk>
+                <br />
+                <p style={{ color: "red", fontSize: "0.8rem", paddingTop: '1rem', paddingRight: "1.5rem", lineHeight: '1.2rem' }}>이미지가 화면에 나타나면 이미지 등록 버튼을 눌러주세요.</p>
             </InfoSubTitle>
             <Image />
         </InfoLi>

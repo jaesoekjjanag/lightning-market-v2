@@ -7,7 +7,7 @@ const BlockWrapper = styled.div`
   width:200px;
 `
 const ItemImg = styled.img`
-  // height: 70%;
+  height: 70%;
   width: 100%;
   border-bottom: 0.3px solid rgb(216, 214, 214)
 `
@@ -45,6 +45,7 @@ const HoursAgo = styled.span`
 `
 
 const ImgBlock = ({ data }) => {
+  console.log(data.createdAt)
   const duration = new Date() - new Date(data.createdAt)
   const seconds = Math.floor(duration / 1000);
   const minutes = Math.floor(seconds / 60);
@@ -63,7 +64,7 @@ const ImgBlock = ({ data }) => {
   return (
     <React.Fragment>
       <BlockWrapper className='blockWrapper'>
-        <ItemImg className='itemImg' src="http://placehold.it/100" alt="" />
+        <ItemImg className='itemImg' src={`http://localhost:5000/${data.image[0]}`} alt="" />
         <ImgDescr className='img-descr'>
           <Title className='img-title'><h5>{data.title}</h5></Title>
           <PriceHours>

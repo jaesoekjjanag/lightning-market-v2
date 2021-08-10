@@ -4,8 +4,12 @@ const Image = mongoose.Schema({
   src: {
     type: String,
     required: true,
-  }
-
+  },
+  postId: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post',
+    required: true,
+  }],
 })
 
-module.exports = mongoose.Model('Image', Image)
+module.exports = mongoose.model('Image', Image)

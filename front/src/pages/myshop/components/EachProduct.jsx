@@ -24,6 +24,14 @@ const PriceDate = styled.div`
   display:flex;
   justify-content:space-between;
 `
+const ImgContainer = styled.div`
+  height:60%;
+  border-bottom:0.3px solid gray;
+  &>img{
+    width:100%;
+    height:100%;
+  }
+`
 
 const EachProduct = ({ data }) => {
   const duration = new Date() - new Date(data.createdAt)
@@ -44,7 +52,7 @@ const EachProduct = ({ data }) => {
 
   return (
     <Blocks>
-      <div><img src="https://via.placeholder.com/180" alt="" /></div>
+      <ImgContainer ><img src={`http://localhost:5000/${data.image[0]}`} alt="" /></ImgContainer>
       <Title>{data.title}</Title>
       <PriceDate>
         <span>{data.price}원</span>

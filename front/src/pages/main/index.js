@@ -1,6 +1,6 @@
 import React from 'react'
 import ImgBlockGrid from './ImgBlockGrid';
-import Carousel from './carousel';
+import Carousel from './Carousel';
 import Layout from '../../components/Layout';
 import { createGlobalStyle } from 'styled-components';
 import Product from '../product/index'
