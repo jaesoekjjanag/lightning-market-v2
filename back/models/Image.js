@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const Image = mongoose.Schema({
+  seller: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   src: {
     type: String,
     required: true,
@@ -8,4 +13,4 @@ const Image = mongoose.Schema({
 
 })
 
-module.exports = mongoose.Model('Image', Image)
+module.exports = mongoose.model('Image', Image)

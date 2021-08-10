@@ -122,7 +122,7 @@ const Login = () => {
   }
 
   return (
-    <BackgroundDiv className="modal" onClick={onClickModal}>
+    <BackgroundDiv className="modal" onMouseDown={onClickModal}>
       <MainDiv >
         <button onClick={onClickClose}><img src="x.png" alt="closeButton" /></button>
         <Text>

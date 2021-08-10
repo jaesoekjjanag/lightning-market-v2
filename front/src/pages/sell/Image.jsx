@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 const ImageForm = styled.form`
   width:840px;
@@ -41,17 +42,14 @@ const ImgBlock = styled.div`
   display:inline-block;
   position:relative;
 
-  // &:hover{
-  //   background-color: black;
-  // }
+  &:hover div{
+    display:block;
+  }
 `
 const Img = styled.img`
   width:100%;
   height:100%;
-  &:hover{
-    box-shadow:  0 0 8px 0.5px rgba(0, 0, 0, 0.1);
-    background: rgba(0,0,0,0.7);
-  }
+  object-fit:scale-down;
 `
 const Input = styled.input`
   position:absolute;
@@ -61,13 +59,29 @@ const Input = styled.input`
   width:6rem;
   height:2rem;
 `
+const Overlay = styled.div`
+  position:absolute;
+  height:200px;
+  width:200px;
+  background: rgba(0,0,0,0.55);
+  top:0;
+  display:none;
+  text-align:center;
+
+  & > img{
+    position:relative;
+    height:50px;
+    width:50px;
+    top:calc(50% - 25px);    
+  }
+`
 
 const Image = () => {
   const [thumbnailImg, setThumbnailImg] = useState([])
   const [uploadImg, setUploadImg] = useState([])
+  const { id } = useSelector(state => state.user.userInfo)
 
   const imgRef = useRef();
-
   const onClickBlock = () => {
     imgRef.current.click();
   }
@@ -90,20 +104,22 @@ const Image = () => {
 
   const onSumbitImage = async (e) => {
     e.preventDefault();
-    // console.log(uploadImg)
     const imageForm = new FormData();
     uploadImg.forEach((v) => {
-      console.log(v)
       imageForm.append('image', v)
     })
-    await axios.post('http://localhost:5000/post/image', imageForm)
-
+    const res = await axios.post('http://localhost:5000/post/image', imageForm)
+    console.log(res.data)
   }
 
   return (
-    <ImageForm onSubmit={onSumbitImage}>
-      <ImageInput onClick={onClickBlock}><img src="plus.png" alt="plus.png" /></ImageInput>
-      {thumbnailImg && thumbnailImg.map((v) => (<ImgBlock key={v}><Img src={v} alt={v} /></ImgBlock>))}
+    <ImageForm onSubmit={onSumbitImage} encType='mutipart/form-data'>
+      <ImageInput onClick={onClickBlock} title='사진 등록'><img src="plus.png" alt="plus.png" /></ImageInput>
+      {thumbnailImg && thumbnailImg.map((v) => (
+        <ImgBlock key={v}><Img src={v} alt={v} />
+          <Overlay title='사진 제거'><img src="thinX.png" alt="deleteImage" /></Overlay>
+        </ImgBlock>)
+      )}
       <input type="file" onChange={uploadImage} ref={imgRef} hidden multiple />
       <Input type="submit" value='이미지 등록' />
     </ImageForm>
