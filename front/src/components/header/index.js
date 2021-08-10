@@ -15,9 +15,6 @@ const StyledHeader = styled.header`
     background-color:white;
     z-index:1;
 
-    @media(max-width:768px){
-        // position:absolute;
-    }
 `;
 
 const StyledDiv = styled.div`

@@ -29,7 +29,7 @@ const Local = ({ close }) => {
   const onSubmitLogin = async (e) => {
     e.preventDefault();
     try {
-      const info = await axios.post('http://localhost:5000/user/login', {
+      const info = await axios.post('/user/login', {
         email,
         password
       });

@@ -34,13 +34,6 @@ const PopupCloseBtnWrap = styled.div`
     justify-content: space-between;
 `
 
-const PopupCloseBtn = styled.button`
-    // text-align: right;
-    // position: absolute;
-    // top: 27%;
-    // right: 4%;
-    border: none;
-`
 
 const PopupState = () => {
     const dispatch = useDispatch();
@@ -50,7 +43,7 @@ const PopupState = () => {
 
     // 팝업창 닫기
     const closePopup = () => {
-        dispatch(addrPopup(false))
+        dispatch(addrPopup(false));
     };
 
 
@@ -58,7 +51,7 @@ const PopupState = () => {
         <StyledPopup id="popupWrap" activate={isPopupOpen}>
             <PopupCloseBtnWrap>
                 <span >주소 찾기</span>
-                <PopupCloseBtn onClick={closePopup}><img width="22px" src="x.png" alt="closeButton" /></PopupCloseBtn>
+                <div onClick={closePopup}><img width="22px" src="x.png" alt="closeButton" /></div>
             </PopupCloseBtnWrap>
             {isPopupOpen && (
                 <DaumPost onClose={closePopup} />

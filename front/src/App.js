@@ -6,13 +6,13 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import Login from './components/Login'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
+
+axios.defaults.baseURL = "http://localhost:5000"
 
 const PageWrapper = styled.div`
   width:1024px;
   margin: 0 auto;
-  @media(max-width:768px){
-    width:100vw;
-  }
 `
 
 const App = () => {

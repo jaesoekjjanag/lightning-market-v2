@@ -1,10 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { LinkTagStyle } from '../../pages/main';
 import { POPUP } from '../../reducer/loginPopup';
-import { useSelector } from 'react-redux';
 
 const StyledUtility = styled.ul`
     list-style: none;

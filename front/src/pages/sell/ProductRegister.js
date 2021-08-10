@@ -4,12 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 // import DaumPost from './DaumPost'
 // import PopupDom from './PopupDom';
 import PopupState from './PopupState'
+import Image from './Image';
 import { addrPopup } from '../../reducer/addressPopup';
+import axios from 'axios'
+import { POPUP } from '../../reducer/loginPopup';
+import Login from '../../components/Login';
 
-const RegisterWrapDiv = styled.section`
-    margin: 0 auto;
-    width: 1024px;
-`
+
 const InfoTitle = styled.h2`
     height: 100px;
     font-size: 26px;
@@ -33,6 +34,7 @@ const InfoLi = styled.li`
     border-bottom: 1px solid rgb(220, 219, 228);
     line-height: 32px;
 `
+
 const InfoSubTitle = styled.div`
     width: 10.5rem;
     height: 32px;
@@ -105,7 +107,7 @@ const CategoryLi = styled.li`
     height: 40px;
     align-items: center;
 `
-const CategoryBtn = styled.button`
+const CategoryBtn = styled.div`
     width: 100%;
     height: 100%;
     padding: 0px 1.5rem;
@@ -187,20 +189,25 @@ const RegisterBtn = styled.button`
     outline: none;
     background-color: var(--main-yellow);
     margin-right: 2rem;
+    color:#4A4F5A;
+    // text-shadow: 0px 0px 2px gray;
+
+    &:hover{
+        box-shadow:  0 0 8px rgba(0, 0, 0, 0.1)
+    }
 `
 
 
-const Register = () => {
+const Register = ({ match, history }) => {
     const dispatch = useDispatch();
 
     // 상품등록시 제목 길이
     const [productTitleLen, setproductTitleLen] = useState(0);
-
     // 상품등록시 제목 길이가 2보다 작을경우 메세지 출력
     const [productWarnMsg, setproductWarnMsg] = useState(false);
 
     //상품 상태
-    const onClickState = (e) => {
+    const onClickCondition = (e) => {
         console.log(e.currentTarget.value)
     }
 
@@ -244,16 +251,16 @@ const Register = () => {
     };
 
     // 입력한 주소값 가져오기
-    const addr = useSelector(state=>state.addressPopup.address)
+    const addr = useSelector(state => state.addressPopup.address)
 
     // 팝업창 열기
 
-    const openPopup = () => {
-        console.log(addr)
+    const openPopup = (e) => {
+        e.preventDefault();
         dispatch(addrPopup(true))
     };
 
-    
+
     // 가격이 100원 미만일경우 메세지 출력
     const [costWarningMsg, setCostWarningMsg] = useState(false);
 
@@ -262,7 +269,7 @@ const Register = () => {
         if (isNaN(e.target.value)) {
             alert('숫자만 입력해주세요');
             e.target.value = ""
-        } else if (e.target.value.length <3) {
+        } else if (e.target.value.length < 3) {
             setCostWarningMsg(true);
         } else if (e.target.value.length >= 3) {
             setCostWarningMsg(false);
@@ -284,21 +291,40 @@ const Register = () => {
         }
     }
 
-    
-    return <React.Fragment>
-        <RegisterWrapDiv>
-            <InfoTitle>
-                기본정보
-                <RequiredInfo>*필수항목</RequiredInfo>
-            </InfoTitle>
+    //사용자 id 불러오기
+    const { isLoggedIn, userInfo } = useSelector(state => state.user);
 
+    const onSubmitForm = (e) => {
+        e.preventDefault();
+        //form에 담아서 post
+        const { title, address, condition, exchange, price, description, amount } = e.target
+        axios.post('/post', {
+            seller: userInfo.id,
+            title: title.value,
+            address: address.value,
+            condition: condition.value,
+            exchange: exchange.value,
+            price: price.value,
+            description: description.value,
+            amount: amount.value
+        })
+        history.goBack();
+    }
+
+    return <React.Fragment>
+        <InfoTitle >
+            기본정보
+            <RequiredInfo>*필수항목</RequiredInfo>
+        </InfoTitle>
+        <InfoLi style={{ position: "relative" }}>
+            <InfoSubTitle >
+                <span>상품이미지</span>
+                <Asterisk>*</Asterisk>
+            </InfoSubTitle>
+            <Image />
+        </InfoLi>
+        <form onSubmit={onSubmitForm}>
             <InfoWrap>
-                <InfoLi>
-                    <InfoSubTitle>
-                        상품이미지
-                        <Asterisk>*</Asterisk>
-                    </InfoSubTitle>
-                </InfoLi>
                 <InfoLi>
                     <InfoSubTitle className="titlePadding">
                         제목
@@ -306,7 +332,7 @@ const Register = () => {
                     </InfoSubTitle>
                     <ProductWrap>
                         <ProductTitleWrap>
-                            <ProductTitle type="text" placeholder="상품 제목을 입력해주세요." maxLength="40" onInput={charLength} />
+                            <ProductTitle type="text" name='title' placeholder="상품 제목을 입력해주세요." maxLength="40" onInput={charLength} />
                             <CharNumber>
                                 {productTitleLen}/40
                             </CharNumber>
@@ -338,10 +364,10 @@ const Register = () => {
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
                     <AddressWrap>
-                        <AddressBtn>내 위치</AddressBtn>
+                        <AddressBtn onClick={(e) => e.preventDefault()}>내 위치</AddressBtn>
                         <AddressBtn onClick={openPopup}>위치 검색</AddressBtn>
                         <PopupState></PopupState>
-                        <AddressInput readOnly placeholder="선호 거래 지역을 검색해주세요." value={addr}></AddressInput>
+                        <AddressInput name='address' readOnly placeholder="선호 거래 지역을 검색해주세요." value={addr}></AddressInput>
                     </AddressWrap>
                 </InfoLi>
 
@@ -353,10 +379,10 @@ const Register = () => {
                     <div>
 
                         <RadioLeft htmlFor="중고상품">
-                            <input onClick={onClickState} type="radio" id="중고상품" value='old' name="상태" checked />중고상품
+                            <input onClick={onClickCondition} type="radio" id="중고상품" value='old' name="condition" checked />중고상품
                         </RadioLeft>
                         <label htmlFor="새상품">
-                            <input onClick={onClickState} type="radio" id="새상품" value='new' name="상태" />새상품
+                            <input onClick={onClickCondition} type="radio" id="새상품" value='new' name="condition" />새상품
                         </label>
                     </div>
                 </InfoLi>
@@ -367,10 +393,10 @@ const Register = () => {
                     </InfoSubTitle>
                     <div>
                         <RadioLeft htmlFor="교환불가">
-                            <input onClick={onClickExchange} type="radio" value='no' id="교환불가" name="교환" checked />교환불가
+                            <input onClick={onClickExchange} type="radio" value='0' id="교환불가" name="exchange" checked />교환불가
                         </RadioLeft>
                         <label htmlFor="교환가능">
-                            <input onClick={onClickExchange} type="radio" value='yes' id="교환가능" name="교환" />교환가능
+                            <input onClick={onClickExchange} type="radio" value='1' id="교환가능" name="exchange" />교환가능
                         </label>
                     </div>
                 </InfoLi>
@@ -381,16 +407,16 @@ const Register = () => {
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
                     <div>
-                        <NumberInput type="text" placeholder="숫자만 입력해주세요." onInput={costData}/>원
+                        <NumberInput name='price' type="text" placeholder="숫자만 입력해주세요." onInput={costData} />원
                         <WarningMsg activate={costWarningMsg} >
                             100원 이상 입력해주세요.
                         </WarningMsg>
                         <CostCheckBox>
                             <RadioLeft htmlFor="배송비포함">
-                                <input type="checkbox" id="배송비포함"/>배송비포함
+                                <input name='shipping' type="checkbox" id="배송비포함" />배송비포함
                             </RadioLeft>
                             <label htmlFor="가격협의 가능">
-                                <input type="checkbox" id="가격협의 가능"/>가격협의 가능
+                                <input name='nego' type="checkbox" id="가격협의 가능" />가격협의 가능
                             </label>
                         </CostCheckBox>
                     </div>
@@ -402,7 +428,7 @@ const Register = () => {
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
                     <ProductInfoWrap>
-                        <ProductInfo placeholder="상품 설명을 적어주세요." rows="6" onInput={infoLength}></ProductInfo>
+                        <ProductInfo name='description' placeholder="상품 설명을 적어주세요." rows="6" onInput={infoLength}></ProductInfo>
                         <CharNumber>
                             {productInfoLen}/2000
                         </CharNumber>
@@ -415,7 +441,7 @@ const Register = () => {
                         <Asterisk>*</Asterisk>
                     </InfoSubTitle>
                     <div>
-                        <NumberInput type="text" placeholder="숫자만 입력해주세요." onInput={countData}/>개
+                        <NumberInput name='amount' type="text" placeholder="숫자만 입력해주세요." onInput={countData} />개
                     </div>
                 </InfoLi>
 
@@ -425,9 +451,10 @@ const Register = () => {
                     <RegisterBtn>등록하기</RegisterBtn>
                 </RegisterBtnWrap>
             </RegisterFooter>
-
-        </RegisterWrapDiv>
+        </form>
     </React.Fragment>
+
+
 }
 
 export default Register;

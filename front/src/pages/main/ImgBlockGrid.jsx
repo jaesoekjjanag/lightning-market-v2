@@ -1,53 +1,43 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { loadPosts } from '../../reducer/post';
 import ImgBlock from './ImgBlock';
+import { LinkTagStyle } from './index'
 
 const ImagesWrapper = styled.div`
   display: grid;
+  width:100%;
   grid-template-columns:repeat(5,1fr);
   grid-template-rows: repeat(5, 1fr);
-  gap:8px;
+  gap:6px;
   height: 1400px;
   padding-top: 100px;
 
-  @media(max-width:768px){
-    grid-template-columns:repeat(2, 1fr);
-    padding: 0 1vw;
-  }
 `
 // const Imgs = styled.div`
 //   border:1px solid black;
 // `
 const ImgBlockGrid = () => {
+  const [posts, setPosts] = useState();
 
-  const merchandises = {
-    '프라다': '4,000,000',
-    '구찌': '2,400,000',
-    '루이비통': '3,000,000',
-    '생로랑': '3,800,000',
-    '지오다노': '40,000',
-    '벽시계': '3,000',
-    '대나무 숟가락': '500',
-    '페라리': '100,000,000'
-  }
-
-  // const ImgBlockMap = merchandises.map(val =>
-  //   <ImgBlock title={val.} price ={}/>)
-
-  function ImgBlockMap() {
-    let mappedMerchandises = [];
-    for (let i in merchandises) {
-      mappedMerchandises.push(<ImgBlock key={merchandises[i] + i} title={i} price={merchandises[i]} />);
+  useEffect(() => {
+    async function loadPosts() {
+      const posts = await axios.post('/post/posts')
+      setPosts(posts.data);
     }
 
-    return mappedMerchandises
-  }
+    loadPosts()
+  }, [])
 
   return (
     <React.Fragment>
+      <LinkTagStyle />
       <ImagesWrapper className="ImagesWrapper">
-        {/* {ImgBlockMap} */}
-        {ImgBlockMap()}
+        {posts && posts.map((v, i) => (
+          <Link to={`/product/${v._id}`}><ImgBlock data={v} key={v.createdAt} /></Link>
+        ))}
       </ImagesWrapper>
     </React.Fragment>
   )
