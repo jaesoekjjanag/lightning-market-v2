@@ -3,7 +3,6 @@ import ImgBlockGrid from './ImgBlockGrid';
 import Carousel from './Carousel';
 import Layout from '../../components/Layout';
 import { createGlobalStyle } from 'styled-components';
-import Product from '../product/index'
 
 export const LinkTagStyle = createGlobalStyle`
     a{
@@ -21,7 +20,6 @@ const Main = () => {
       <Layout>
         <Carousel />
         <ImgBlockGrid />
-        <Product/>
       </Layout>
     </React.Fragment>
   )

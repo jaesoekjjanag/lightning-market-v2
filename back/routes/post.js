@@ -6,7 +6,7 @@ const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
 
-//* router.[메소드]('/응답할 주소', (req,res,[next])) 형태로 작성
+// * router.[메소드]('/응답할 주소', (req,res,[next])) 형태로 작성
 
 // 2. uploads 폴더 없으면 생성
 try {

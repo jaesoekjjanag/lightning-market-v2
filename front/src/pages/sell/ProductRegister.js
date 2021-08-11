@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-// import DaumPost from './DaumPost'
-// import PopupDom from './PopupDom';
 import PopupState from './PopupState'
 import Image from './Image';
 import { addrPopup } from '../../reducer/addressPopup';

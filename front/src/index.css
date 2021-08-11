@@ -8,6 +8,10 @@ body {
     margin: 0;
 }
 
+body, input, textarea, select, button {
+  letter-spacing: -0.5px;
+}
+
 :root{
 --main-yellow:rgb(255,239,0);
 --border-default: 0.5px solid rgb(216, 214, 214);
