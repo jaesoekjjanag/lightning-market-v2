@@ -38,9 +38,8 @@ router.post('/login', async (req, res, next) => {
         }
       })
   } catch (err) {
-    console.error(err);
     res.status(401).send('존재하지 않는 계정입니다.');
-    next(err);
+    return next(err);
   }
 })
 

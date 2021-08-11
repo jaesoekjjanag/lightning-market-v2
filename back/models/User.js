@@ -20,6 +20,10 @@ const User = mongoose.Schema({
     required: false,
     default: Date.now() + '상점'
   },
+  comment: {
+    type: String,
+    required: false
+  },
   phone: {
     type: Number,
     required: false,

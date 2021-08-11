@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Blocks = styled.div`
   height:300px;
   width:180px;
-  border:0.3px solid gray;
+  border:0.1px solid lightgray;
   display:inline-block;
   box-sizing:border-box;
 
@@ -26,7 +26,7 @@ const PriceDate = styled.div`
 `
 const ImgContainer = styled.div`
   height:60%;
-  border-bottom:0.3px solid gray;
+  border-bottom:0.1px solid lightgray;
   &>img{
     width:100%;
     height:100%;
