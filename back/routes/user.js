@@ -43,7 +43,7 @@ router.post('/login', async (req, res, next) => {
   }
 })
 
-router.post('/nickname', async (req, res, next) => {
+router.patch('/nickname', async (req, res, next) => {
   const { id, nickname } = req.body
   console.log(id, nickname)
   try {
@@ -56,6 +56,19 @@ router.post('/nickname', async (req, res, next) => {
     return next(err)
   }
 
+})
+
+router.patch('/comment', async (req, res, next) => {
+  const { id, comment } = req.body;
+  try {
+    const user = await User.findOne({ _id: id })
+    user.comment = comment;
+    await user.save();
+    res.status(200).send(user)
+  } catch (err) {
+    console.error(err);
+    next(err)
+  }
 })
 
 module.exports = router;

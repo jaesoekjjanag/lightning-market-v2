@@ -22,6 +22,7 @@ const Button = styled.button`
 
 const Utility = () => {
     const isLoggedIn = useSelector(state => state.user.isLoggedIn)
+    const id = useSelector(state => state.user.userInfo?.id)
     const dispatch = useDispatch();
 
     const onClickLogin = () => {
@@ -36,7 +37,8 @@ const Utility = () => {
                 <Link to='/sell/register'>판매하기</Link>
             </UtilityList>
             <UtilityList className="utilityAfter">
-                <Link to='/myshop/product'>내상점</Link>
+                {id
+                    && <Link to={`/myshop/${id}/product`}>내상점</Link>}
             </UtilityList>
             <UtilityList><Button>벼락톡</Button></UtilityList>
             {isLoggedIn || <UtilityList><Button onClick={onClickLogin}>로그인</Button></UtilityList>}

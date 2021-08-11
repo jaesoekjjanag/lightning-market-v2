@@ -1,11 +1,19 @@
-import React, { useState, useRef } from 'react'
-import { Route } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react'
+import { Route, Link, Switch } from 'react-router-dom'
 import Tab from './layout/Tab'
 import Layout from '../../components/Layout'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { NICKNAME_CHANGE } from '../../reducer/user'
+import { NICKNAME_CHANGE, COMMENT_CHANGE } from '../../reducer/user'
 import axios from 'axios'
+import Product from './components/Product'
+import Follower from './components/Follower'
+import Ask from './components/Ask'
+import Following from './components/Following'
+import Review from './components/Review'
+import Jjim from './components/Jjim'
+import { LinkTagStyle } from '../../pages/main'
+
 
 
 const TopDiv = styled.div`
@@ -71,25 +79,25 @@ const SmallInfo = styled.div`
   font-size:0.9rem;
 `
 
-const Textarea = styled.form`
+const TextareaDiv = styled.div`
   display:flex;
   border-collapse:collapse;
   margin-top:1rem;
   height: 76%;
-  & textarea{
-    width:85%;
-    border: 0.1px solid black;
-    border-right:none;
-    resize:none;
-    box-sizing:border-box;
-    padding: 2%;
-  }
 
   & button{
     width:15%;
     vertical-align:center;
     border: .1px solid black;
   }
+`
+const TextArea = styled.textarea`
+width:85%;
+border: ${prop => prop.on ? '1px solid black' : `none`};
+border-right:none;
+resize:none;
+box-sizing:border-box;
+padding:${prop => prop.on ? '2%' : '2% 0 2% 0'}
 `
 const BtmDiv = styled.div`
   margin:30px 0;
@@ -106,19 +114,23 @@ const EditDiv = styled.div`
   }
 `
 
-const Router = ({ match }) => {
-  //미완성
 
-  const { id, nickname } = useSelector(state => state.user.userInfo && state.user.userInfo)
+const Router = ({ match }) => {
+  //? 라우팅을 어떻게 해야할지 잘 모르겠음..
+
+  const id = (match.url.replace('/myshop/', ''))
+
+  const { nickname, comment } = useSelector(state => state.user.userInfo && state.user.userInfo)
   const [nicknameValue, setNicknameValue] = useState(nickname ? nickname : `상점${id}`)
   const [nicknameChange, setNicknameChange] = useState(false);
+  const [commentValue, setCommentValue] = useState(comment && comment);
   const [onComment, setOnComment] = useState(false);
 
   const dispatch = useDispatch();
 
   const onClickEdit = async () => {
     try {
-      const res = await axios.post('/user/nickname', { id: id, nickname: nicknameValue })
+      const res = await axios.patch('/user/nickname', { id: id, nickname: nicknameValue })
       console.log(res.data)
       dispatch({
         type: NICKNAME_CHANGE,
@@ -130,16 +142,46 @@ const Router = ({ match }) => {
     }
   }
 
-  // const commentOff = async (e) => {
-  //   e.preventDefault();
-  //   setOnComment(p => !p)
-  // }
-  const patchComment = (e) => {
-    // e.preventDefault();
-    e.preventDefault();
-    console.log('bug?')
-    // setOnComment(p => !p)
-    // console.log(e.comment.value)
+  const patchComment = async (e) => {
+    try {
+      setOnComment(p => !p)
+      const res = await axios.patch('/user/comment', { id, comment: commentValue })
+      console.log(res.data)
+      dispatch({
+        type: COMMENT_CHANGE,
+        comment: commentValue
+      })
+    } catch (err) {
+
+    }
+  }
+
+  // const [crntTab, setCrntTab] = useState('')
+  const [tabname, setTabName] = useState('상품');
+
+  const onClickTab = (e) => {
+    switch (e.currentTarget.textContent) {
+      case '상품':
+        setTabName('상품')
+        return <Product />;
+      case '상점문의':
+        setTabName('상점문의')
+        return <Ask />
+      case '찜':
+        setTabName('찜')
+        return <Jjim />
+      case '상점후기':
+        setTabName('상점후기')
+        return <Review />
+      case '팔로잉':
+        setTabName('팔로잉')
+        return <Following />
+      case '팔로워':
+        setTabName('팔로워')
+        return <Follower />
+      default:
+        break;
+    }
   }
 
   return (
@@ -164,11 +206,11 @@ const Router = ({ match }) => {
               <span>상점 오픈 일</span>
               <span>상품 판매 n회</span>
             </SmallInfo>
-            {onComment
-              && <Textarea onSumbit={patchComment}>
-                <textarea name="comment" cols="30" rows="10" />
-                <button>확인</button>
-              </Textarea>}
+
+            <TextareaDiv >
+              <TextArea on={onComment} onChange={(e) => setCommentValue(e.currentTarget.value)} name="comment" cols="30" rows="10" value={commentValue} />
+              {onComment && <button onClick={patchComment}>확인</button>}
+            </TextareaDiv>
             {onComment
               || <EditDiv>
                 <button onClick={() => setOnComment(p => !p)}>
@@ -178,7 +220,15 @@ const Router = ({ match }) => {
           </div>
         </TopDiv>
         <BtmDiv>
-          < Route path='/myshop/:tab' component={Tab} />
+          <LinkTagStyle />
+          <Tab id={id} />
+          <div><h3>{tabname} n</h3></div>
+          <Route path={`${match.url}/product`} component={Product} />
+          <Route path={`${match.url}/ask`} component={Ask} />
+          <Route path={`${match.url}/jjim`} component={Jjim} />
+          <Route path={`${match.url}/review`} component={Review} />
+          <Route path={`${match.url}/following`} component={Following} />
+          <Route path={`${match.url}/follower`} component={Follower} />
         </BtmDiv>
       </Layout>
     </React.Fragment>

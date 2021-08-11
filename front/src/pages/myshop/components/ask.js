@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Tab from '../layout/Tab'
 
 const Form = styled.form`
   width: 100%;
@@ -26,15 +27,19 @@ const Form = styled.form`
   }
 `
 
-const Ask = () => {
+const Ask = ({ match }) => {
+  // const id = (match.url.replace('/myshop/', ''))
+  console.log(match)
   return (
-    <Form>
-      <input type="textarea" maxLength="100" />
-      <div>
-        <span>n/100</span>
-        <span><button>입력</button></span>
-      </div>
-    </Form>
+    <div>
+      <Form>
+        <input type="textarea" maxLength="100" />
+        <div>
+          <span>n/100</span>
+          <span><button>입력</button></span>
+        </div>
+      </Form>
+    </div>
   )
 }
 

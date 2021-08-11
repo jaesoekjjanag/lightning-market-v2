@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import EachProduct from './EachProduct'
 import axios from 'axios'
+import Tab from '../layout/Tab'
+
 
 const Wrapper = styled.div`
   display:flex;
@@ -27,6 +29,7 @@ const Product = () => {
 
   return (
     <Wrapper>
+      {/* <Tab /> */}
       {myPosts && myPosts.map((v, i) => (
         <EachProduct data={v} />
       )

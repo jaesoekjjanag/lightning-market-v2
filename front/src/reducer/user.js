@@ -8,6 +8,7 @@ const initialState = {
 
 export const LOG_IN = "LOG_IN";
 export const NICKNAME_CHANGE = "NICKNAME_CHANGE"
+export const COMMENT_CHANGE = "COMMNET_CHANGE"
 
 export const logIn = (data) => {
   return {
@@ -39,6 +40,14 @@ const reducer = (state = initialState, action) => {
         userInfo: {
           ...state.userInfo,
           nickname: action.nickname,
+        }
+      }
+    case COMMENT_CHANGE:
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          comment: action.comment,
         }
       }
     default:

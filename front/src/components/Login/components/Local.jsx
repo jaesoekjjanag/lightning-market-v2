@@ -24,12 +24,12 @@ const Inputs = styled.form`
     }
 
     & > div{
-      text-align:center;
+      text-align:right;
       border:none;
       margin:0;
       height:2rem;
       line-height:2rem;
-      padding:0;
+      padding:0 .5rem 0 0;
       font-size:0.75rem;
       color:red;
     }
