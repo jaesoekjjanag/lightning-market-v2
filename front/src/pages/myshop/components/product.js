@@ -28,13 +28,18 @@ const Product = () => {
   }, [])
 
   return (
-    <Wrapper>
-      {/* <Tab /> */}
-      {myPosts && myPosts.map((v, i) => (
-        <EachProduct data={v} />
-      )
-      )}
-    </Wrapper>
+    <React.Fragment>
+      {/* <div>
+        <h3>상품 n</h3>
+        <hr />
+      </div> */}
+      <Wrapper>
+        {myPosts && myPosts.map((v, i) => (
+          <EachProduct data={v} />
+        )
+        )}
+      </Wrapper>
+    </React.Fragment>
   )
 }
 

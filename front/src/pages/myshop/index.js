@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Route, Link, Switch } from 'react-router-dom'
+import React, { useState, memo, useRef } from 'react'
+import { Route } from 'react-router-dom'
 import Tab from './layout/Tab'
 import Layout from '../../components/Layout'
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { NICKNAME_CHANGE, COMMENT_CHANGE } from '../../reducer/user'
+import { NICKNAME_CHANGE, COMMENT_CHANGE, PROFILE_CHANGE } from '../../reducer/user'
 import axios from 'axios'
 import Product from './components/Product'
 import Follower from './components/Follower'
@@ -74,6 +74,7 @@ const NicknameEdit = styled.div`
 `
 
 const SmallInfo = styled.div`
+  margin-top: 20px;
   height:2rem;
   line-height:2.5rem;
   font-size:0.9rem;
@@ -83,7 +84,7 @@ const TextareaDiv = styled.div`
   display:flex;
   border-collapse:collapse;
   margin-top:1rem;
-  height: 76%;
+  height: 68%;
 
   & button{
     width:15%;
@@ -93,11 +94,17 @@ const TextareaDiv = styled.div`
 `
 const TextArea = styled.textarea`
 width:85%;
-border: ${prop => prop.on ? '1px solid black' : `none`};
+border: 0.1px solid black;
 border-right:none;
 resize:none;
 box-sizing:border-box;
-padding:${prop => prop.on ? '2%' : '2% 0 2% 0'}
+padding:2%;
+font-size:0.9rem;
+
+
+&:focus{
+  outline:none;
+}
 `
 const BtmDiv = styled.div`
   margin:30px 0;
@@ -113,21 +120,41 @@ const EditDiv = styled.div`
     border:0.1px solid black;
   }
 `
+const Hr = styled.hr`
+  margin: 1rem 0 2rem 0;
+`
 
+const ProfileImg = styled.div`
+  text-align:center;
+  line-height:310px;
+  background-color:lightgray;
+`
+const MyImg = styled.img`
+  height:100%;
+  width:100%;
+`
+
+const DefaultImg = styled.img`
+  vertical-align:middle;
+  height: 50%;
+  width: 50%;
+`
 
 const Router = ({ match }) => {
   //? 라우팅을 어떻게 해야할지 잘 모르겠음..
 
   const id = (match.url.replace('/myshop/', ''))
 
-  const { nickname, comment } = useSelector(state => state.user.userInfo && state.user.userInfo)
+  const { profile, nickname, comment, createdAt } = useSelector(state => state.user.userInfo && state.user.userInfo)
+  const postCount = useSelector(state => state.user?.posts).length;
   const [nicknameValue, setNicknameValue] = useState(nickname ? nickname : `상점${id}`)
   const [nicknameChange, setNicknameChange] = useState(false);
   const [commentValue, setCommentValue] = useState(comment && comment);
   const [onComment, setOnComment] = useState(false);
-
+  const [tabName, setTabName] = useState('상품')
+  const daysAgo = parseInt((new Date() - new Date(createdAt)) / (24 * 3600 * 1000))
   const dispatch = useDispatch();
-
+  console.log(profile)
   const onClickEdit = async () => {
     try {
       const res = await axios.patch('/user/nickname', { id: id, nickname: nicknameValue })
@@ -145,8 +172,7 @@ const Router = ({ match }) => {
   const patchComment = async (e) => {
     try {
       setOnComment(p => !p)
-      const res = await axios.patch('/user/comment', { id, comment: commentValue })
-      console.log(res.data)
+      await axios.patch('/user/comment', { id, comment: commentValue })
       dispatch({
         type: COMMENT_CHANGE,
         comment: commentValue
@@ -156,40 +182,44 @@ const Router = ({ match }) => {
     }
   }
 
-  // const [crntTab, setCrntTab] = useState('')
-  const [tabname, setTabName] = useState('상품');
+  const profileRef = useRef();
 
-  const onClickTab = (e) => {
-    switch (e.currentTarget.textContent) {
-      case '상품':
-        setTabName('상품')
-        return <Product />;
-      case '상점문의':
-        setTabName('상점문의')
-        return <Ask />
-      case '찜':
-        setTabName('찜')
-        return <Jjim />
-      case '상점후기':
-        setTabName('상점후기')
-        return <Review />
-      case '팔로잉':
-        setTabName('팔로잉')
-        return <Following />
-      case '팔로워':
-        setTabName('팔로워')
-        return <Follower />
-      default:
-        break;
-    }
+  const clickInput = () => {
+    profileRef.current.click();
   }
 
+  const uploadImg = async (e) => {
+    const img = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', img)
+    const res = await axios.post('/user/profile', formData, { header: { 'content-type': 'multipart/form-data' } });
+    ask(res.data);
+  }
+
+  const ask = async (imgPath) => {
+    let a = window.confirm('변경사항을 적용하시겠습니까?')
+    if (a) {
+      await axios.patch('/user/profile', { id: id, imgPath: imgPath })
+      dispatch({
+        type: PROFILE_CHANGE,
+        profile: imgPath,
+      })
+    }
+  }
   return (
     <React.Fragment>
       <Layout>
-        <TopDiv>
-          <div></div>
-          <div>
+        <TopDiv >
+          <ProfileImg onClick={clickInput}>
+            {/* <form action=""> */}
+            {profile
+              ? <MyImg src={`http://localhost:5000/profile/${profile}`} alt='profileImage' />
+              : <DefaultImg src="man.png" alt="profileImage" />
+            }
+            <input type="file" name='profile' hidden ref={profileRef} onChange={uploadImg} />
+            {/* </form> */}
+          </ProfileImg>
+          <div >
             {nicknameChange
               ? <NicknameEdit>
                 <input type="text" value={nicknameValue} onChange={(e) => setNicknameValue(e.currentTarget.value)} />
@@ -203,12 +233,14 @@ const Router = ({ match }) => {
               </Nickname>
             }
             <SmallInfo>
-              <span>상점 오픈 일</span>
-              <span>상품 판매 n회</span>
+              <span>상점오픈일 {daysAgo}일 전</span>
+              <span>상품판매 {postCount}회</span>
             </SmallInfo>
 
             <TextareaDiv >
-              <TextArea on={onComment} onChange={(e) => setCommentValue(e.currentTarget.value)} name="comment" cols="30" rows="10" value={commentValue} />
+              {onComment
+                ? <TextArea value={commentValue} onChange={(e) => setCommentValue(e.currentTarget.value)} name="comment" cols="30" rows="10" />
+                : <div>{commentValue}</div>}
               {onComment && <button onClick={patchComment}>확인</button>}
             </TextareaDiv>
             {onComment
@@ -221,8 +253,9 @@ const Router = ({ match }) => {
         </TopDiv>
         <BtmDiv>
           <LinkTagStyle />
-          <Tab id={id} />
-          <div><h3>{tabname} n</h3></div>
+          <Tab id={id} changeTab={setTabName} />
+          <div><h3>{tabName} n</h3></div>
+          <Hr />
           <Route path={`${match.url}/product`} component={Product} />
           <Route path={`${match.url}/ask`} component={Ask} />
           <Route path={`${match.url}/jjim`} component={Jjim} />
@@ -235,4 +268,4 @@ const Router = ({ match }) => {
   )
 }
 
-export default Router;
+export default memo(Router);

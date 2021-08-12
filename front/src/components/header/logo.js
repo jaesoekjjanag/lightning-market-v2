@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -19,7 +19,7 @@ const StyledLogoImg = styled.img`
 
 
 
-const Logo = () => {
+const Logo = memo(() => {
 
     return <React.Fragment>
         <Link to='/'>
@@ -29,6 +29,6 @@ const Logo = () => {
             </StyledLogoBox>
         </Link>
     </React.Fragment>
-}
+})
 
 export default Logo;

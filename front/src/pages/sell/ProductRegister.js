@@ -1,12 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import PopupState from './PopupState'
 import Image from './Image';
 import { addrPopup } from '../../reducer/addressPopup';
 import axios from 'axios'
-import { POPUP } from '../../reducer/loginPopup';
-import Login from '../../components/Login';
 import { REMOVE_IMAGES } from '../../reducer/post';
 
 

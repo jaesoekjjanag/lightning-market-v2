@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import Logo from './logo'
 // import Search from './search'
@@ -23,7 +23,7 @@ const StyledDiv = styled.div`
     justify-content: space-between;
 `
 
-const Header = () => {
+const Header = memo(() => {
     return <React.Fragment>
         <StyledHeader>
             <StyledDiv>
@@ -35,6 +35,6 @@ const Header = () => {
             <Sidebar />
         </StyledHeader>
     </React.Fragment>
-}
+})
 
 export default Header;

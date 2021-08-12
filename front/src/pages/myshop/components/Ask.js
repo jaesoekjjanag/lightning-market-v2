@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
-import Tab from '../layout/Tab'
-
+import axios from 'axios'
 const Form = styled.form`
   width: 100%;
 
@@ -28,12 +27,16 @@ const Form = styled.form`
 `
 
 const Ask = ({ match }) => {
-  // const id = (match.url.replace('/myshop/', ''))
-  console.log(match)
+  const id = (match.url.replace('/myshop/', '')).replace('/ask', '')
+
+  const submitComment = useCallback(async (e) => {
+    e.preventDefault();
+    // await axios.patch('/comment')
+  }, [])
   return (
     <div>
       <Form>
-        <input type="textarea" maxLength="100" />
+        <input type="textarea" maxLength="100" onSubmit={submitComment} />
         <div>
           <span>n/100</span>
           <span><button>입력</button></span>

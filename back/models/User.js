@@ -15,6 +15,10 @@ const User = mongoose.Schema({
     type: String,
     required: false,
   },
+  profile: {
+    type: String,
+    required: false,
+  },
   nickname: {
     type: String,
     required: false,
