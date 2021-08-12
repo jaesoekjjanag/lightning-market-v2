@@ -128,10 +128,18 @@ const ProfileImg = styled.div`
   text-align:center;
   line-height:310px;
   background-color:lightgray;
+  cursor:pointer;
+  position:relative
 `
+
 const MyImg = styled.img`
   height:100%;
   width:100%;
+  object-fit:cover;
+  
+  &:hover + div{
+    display:block;
+  }
 `
 
 const DefaultImg = styled.img`
@@ -210,14 +218,12 @@ const Router = ({ match }) => {
     <React.Fragment>
       <Layout>
         <TopDiv >
-          <ProfileImg onClick={clickInput}>
-            {/* <form action=""> */}
+          <ProfileImg title="클릭하여 프로필 사진 변경" onClick={clickInput}>
             {profile
               ? <MyImg src={`http://localhost:5000/profile/${profile}`} alt='profileImage' />
               : <DefaultImg src="man.png" alt="profileImage" />
             }
             <input type="file" name='profile' hidden ref={profileRef} onChange={uploadImg} />
-            {/* </form> */}
           </ProfileImg>
           <div >
             {nicknameChange

@@ -51,6 +51,7 @@ router.post('/login', async (req, res, next) => {
           res.cookie('auth', token)
           res.status(200).json({
             'id': info._id,
+            'profile': info.profile,
             'nickname': info.nickname,
             'email': info.email,
             'posts': posts,
