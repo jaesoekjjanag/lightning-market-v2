@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const Post = mongoose.Schema({
+  //_id
   seller: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

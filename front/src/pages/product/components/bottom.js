@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
+import axios from 'axios';
 
 import Comment from './comment';
 
@@ -95,7 +96,7 @@ const ShopWrap = styled.div`
 `
 
 
-const Bottom = () => {
+const Bottom = ({product}) => {
   // * 상품문의 길이 
   const [askLen, setAskLen] = useState(0);
 
@@ -118,7 +119,7 @@ const Bottom = () => {
           <div>
             <Info>상품정보</Info>
             <Description>
-              여기에는 상품 설명이 들어갑니다~~
+              {product.description}
             </Description>
           </div>
 
