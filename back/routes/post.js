@@ -31,6 +31,7 @@ const storage = multer.diskStorage({
 // 3. multer의 storage 객체에 담음
 const upload = multer({ storage })
 
+//상품등록
 router.post('/', async (req, res, next) => {
   try {
     const post = new Post(req.body);
@@ -72,5 +73,13 @@ router.post('/posts', async (req, res, next) => {
 
 router.post('/image', upload.array('image'), async (req, res, next) => {
   res.send(req.files.map((v) => (v.filename)));
+})
+
+router.get('/product',async (req,res,next)=>{
+  //상품 id
+  const {id} = req.query
+  const post = await Post.findOne({_id:id}).populate('seller')
+  res.status(200).send(post)
+
 })
 module.exports = router;

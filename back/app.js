@@ -13,7 +13,6 @@ const commentRouter = require('./routes/comment')
 dotenv.config();
 app.set('port', process.env.PORT || 5000);
 
-
 app.use(morgan())
 app.use('/', express.static(path.join(__dirname, 'uploads')))
 app.use('/profile', express.static(path.join(__dirname, 'profile')))

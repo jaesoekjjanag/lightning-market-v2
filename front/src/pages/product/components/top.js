@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 
+
 const Wrap = styled.div`
   display: flex;
   padding: 30px 0px;
@@ -10,7 +11,13 @@ const ImageWrap = styled.div`
   flex-shrink: 0;
   width: 430px;
   height: 430px;
-  background-color: pink;
+  border: 0.5px solid rgb(208,208,208);
+  
+  & img{
+    height:100%;
+    width:100%;
+    object-fit:cover;
+  }
 `
 const InfoMainWrap = styled.div`
   flex-grow: 1
@@ -33,7 +40,6 @@ const Title = styled.div`
   font-weight: 600;
   line-height: 1.4;
 `
-
 const Cost = styled.div`
   font-size: 40px;
   font-weight: 500;
@@ -54,7 +60,6 @@ const JjimTimeSubWrap = styled.div`
   display: flex;
   align-items: center;
 `
-
 const IconWrap = styled.div`
   display: flex;
   align-itmes: center;
@@ -130,7 +135,6 @@ const BtnJjimWrap = styled.div`
   align-items: center;
   position: relative;
 `
-
 const BtnJjim = styled.button`
   width: 100%;
   height: 100%;
@@ -143,7 +147,6 @@ const BtnJjim = styled.button`
   line-height: 1;
   font-size: 18px;
 `
-
 const CallBtn = styled(Btn)`
   background: rgb(255, 164, 37);
   border: 1px solid rgb(243, 150, 20);
@@ -157,21 +160,22 @@ const BuyBtn = styled(Btn)`
 `
 
 
-const Top = () => {
+const Top = ({product}) => {
+  //id는 게시글의 id
 
   return <>
     <Wrap>
       <ImageWrap>
-          Image 들어가는 곳
+          <img src={`http://localhost:5000/${product.image}`} alt="대표이미지"/>          
       </ImageWrap>
       <InfoMainWrap>
         <InfoSubWrap>
           <TitleCost>
             <Title>
-              여기에는 글 제목이 들어갑니다.
+              {product.title}
             </Title>
             <Cost>
-              300,000 
+              {product.price}
               <Won>원</Won>
             </Cost>
           </TitleCost>
@@ -192,19 +196,19 @@ const Top = () => {
           <div>
             <StateWrap>
               <StateTitle>상품상태</StateTitle>
-              <State>중고</State>
+              <State>{product.condition}</State>
             </StateWrap>
             <StateWrap>
               <StateTitle>교환여부</StateTitle>
-              <State>교환불가능</State>
+              <State>{product.exchange}</State>
             </StateWrap>
             <StateWrap>
              <StateTitle>배송비</StateTitle>
-             <State>배송비 별도</State>
+             <State>{product.shippng}</State>
             </StateWrap>
             <StateWrap>
              <StateTitle>거래지역</StateTitle>
-             <State>인천광역시 연수구 송도2동</State>
+             <State>{product.address}</State>
             </StateWrap>
           </div>
 
