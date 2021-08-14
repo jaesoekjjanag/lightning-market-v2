@@ -21,8 +21,7 @@ const Tabs = styled.div`
   }
 `
 
-const Tab = ({ id, changeTab }) => {
-  console.log(id)
+const Tab = memo(({ id, changeTab }) => {
   return (
     <Tabs>
       <span onClick={() => changeTab('상품')}><Link to={`/myshop/${id}/product`}>상품</Link ></span>
@@ -33,6 +32,6 @@ const Tab = ({ id, changeTab }) => {
       <span onClick={() => changeTab('팔로워')}><Link to={`/myshop/${id}/follower`}>팔로워</Link></span>
     </Tabs>
   )
-}
+})
 
-export default memo(Tab);
+export default Tab;

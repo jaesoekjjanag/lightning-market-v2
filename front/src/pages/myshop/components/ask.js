@@ -1,46 +1,60 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 const Form = styled.form`
   width: 100%;
 
-  & > *{
-    border:1px solid black;
-  }
-
-  & input{
-    height: 5rem;
+  & textarea{
+    height: 100px;
     width:100%;
     padding:1%;
-    overflow:scroll;
+    resize:none;
+    margin:none;
+    font-size:1rem;
+    overflow:hidden;
+
+    &:focus{
+      outline:none;
+    }
   }
 
-  & div{
-    height: 3rem;
-    padding:1%;
-    vertical-align:middle;
-  }
-  & span:last-child{
-    float:right;
-    
+`
+const Bottom = styled.div`
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  height:3rem;
+  border:0.1px solid black;
+  padding:1%;
+
+  button {
+    border: 0.1px solid black;
+    height: 1.5rem;
+    padding:0 1rem;
   }
 `
 
 const Ask = ({ match }) => {
   const id = (match.url.replace('/myshop/', '')).replace('/ask', '')
+  const [text, setText] = useState('');
+  // const [comment, ]
 
-  const submitComment = useCallback(async (e) => {
+  const submitComment = async (e) => {
     e.preventDefault();
-    // await axios.patch('/comment')
-  }, [])
+    await axios.post('/comment', { id: id, text: text })
+  }
+
+  const onChangeText = (e) => {
+    setText(e.target.value)
+  }
   return (
     <div>
-      <Form>
-        <input type="textarea" maxLength="100" onSubmit={submitComment} />
-        <div>
-          <span>n/100</span>
-          <span><button>입력</button></span>
-        </div>
+      <Form onSubmit={submitComment}>
+        <textarea name="ask" id="ask" maxLength='300' onChange={onChangeText}></textarea>
+        <Bottom>
+          <span>{text.length}/300</span>
+          <button>입력</button>
+        </Bottom>
       </Form>
     </div>
   )

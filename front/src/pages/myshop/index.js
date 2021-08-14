@@ -148,7 +148,7 @@ const DefaultImg = styled.img`
   width: 50%;
 `
 
-const Router = ({ match }) => {
+const Router = memo(({ match }) => {
   //? 라우팅을 어떻게 해야할지 잘 모르겠음..
 
   const id = (match.url.replace('/myshop/', ''))
@@ -214,6 +214,7 @@ const Router = ({ match }) => {
       })
     }
   }
+
   return (
     <React.Fragment>
       <Layout>
@@ -272,6 +273,6 @@ const Router = ({ match }) => {
       </Layout>
     </React.Fragment>
   )
-}
+})
 
-export default memo(Router);
+export default Router;

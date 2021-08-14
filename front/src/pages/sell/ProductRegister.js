@@ -6,6 +6,7 @@ import Image from './Image';
 import { addrPopup } from '../../reducer/addressPopup';
 import axios from 'axios'
 import { REMOVE_IMAGES } from '../../reducer/post';
+import { ADD_MYPOST } from '../../reducer/user';
 
 
 const InfoTitle = styled.h2`
@@ -294,11 +295,11 @@ const Register = ({ match, history }) => {
     //업로드할 이미지 파일명 가져와서 json 형식으로 만들기
     const image = useSelector(state => state.post.imagesName);
 
-    const onSubmitForm = (e) => {
+    const onSubmitForm = async (e) => {
         e.preventDefault();
         //form에 담아서 post
         const { title, address, condition, exchange, price, description, amount } = e.target
-        axios.post('/post', {
+        const post = await axios.post('/post', {
             seller: userInfo.id,
             image: image,
             title: title.value,
@@ -309,7 +310,12 @@ const Register = ({ match, history }) => {
             description: description.value,
             amount: amount.value
         })
+        console.log(post.data)
         dispatch({ type: REMOVE_IMAGES })
+        dispatch({
+            type: ADD_MYPOST,
+            data: post.data
+        })
         history.goBack();
     }
 

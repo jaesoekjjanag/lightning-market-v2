@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom';
-import Manage from './Manage';
+import Manage from './manage/Manage';
 import SellLayout from './Layout';
 import Register from './ProductRegister'
 

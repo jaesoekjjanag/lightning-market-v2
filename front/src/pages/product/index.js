@@ -23,11 +23,16 @@ const Product = ({ match }) => {
 
   const [product, setProduct] = useState('');
 
-  useEffect(()=>{
+  useEffect(() => {
     // * 백엔드로 정보 요청
     axios.get(`/post/product?id=${id}`)
+<<<<<<< HEAD
       .then((res)=>{setProduct(res.data)})
   },[id])
+=======
+      .then((res) => { setProduct(res.data) })
+  }, [id])
+>>>>>>> cbae246d7dccad0e7d33fa616b4d400a61436141
 
   //* 'http://localhost:5000/post/[유진이가 정한 주소]'로 get 또는 post 보내면 됨.
   //* 주소는 back/routes/post 경로에서 정할 수 있음.
@@ -35,8 +40,8 @@ const Product = ({ match }) => {
     <Layout>
       <MainWrap>
         <SubWrap>
-          <Top product = {product}/>
-          <Bottom product = {product}/>
+          <Top product={product} />
+          <Bottom product={product} />
         </SubWrap>
       </MainWrap>
     </Layout>

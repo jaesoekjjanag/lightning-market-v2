@@ -8,6 +8,7 @@ const mongoose = require('mongoose')
 const userRouter = require('./routes/user')
 const imageRouter = require('./routes/image')
 const postRouter = require('./routes/post')
+const commentRouter = require('./routes/comment')
 
 dotenv.config();
 app.set('port', process.env.PORT || 5000);
@@ -38,6 +39,7 @@ mongoose.connect(process.env.MONGO, {
 app.use('/user', userRouter)
 app.use('/image', imageRouter)
 app.use('/post', postRouter)
+app.use('/comment', commentRouter)
 
 app.get('/', (req, res) => {
   res.send('hi')

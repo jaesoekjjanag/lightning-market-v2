@@ -52,6 +52,17 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.delete('/', async (req, res, next) => {
+  try {
+    const _id = req.query.id
+    await Post.deleteOne({ _id })
+    res.status(200).send('상품이 삭제되었습니다.')
+  } catch (err) {
+    console.error(err);
+    return next(err)
+  }
+})
+
 //내 상점
 router.post('/mypost', async (req, res, next) => {
   const myPost = await Post.find({ seller: req.body.id }).sort({ createdAt: -1 })
@@ -75,10 +86,10 @@ router.post('/image', upload.array('image'), async (req, res, next) => {
   res.send(req.files.map((v) => (v.filename)));
 })
 
-router.get('/product',async (req,res,next)=>{
+router.get('/product', async (req, res, next) => {
   //상품 id
-  const {id} = req.query
-  const post = await Post.findOne({_id:id}).populate('seller')
+  const { id } = req.query
+  const post = await Post.findOne({ _id: id }).populate('seller')
   res.status(200).send(post)
 
 })

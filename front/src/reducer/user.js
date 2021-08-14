@@ -10,6 +10,8 @@ export const LOG_IN = "LOG_IN";
 export const NICKNAME_CHANGE = "NICKNAME_CHANGE"
 export const COMMENT_CHANGE = "COMMNET_CHANGE"
 export const PROFILE_CHANGE = 'PROFILE_CHANGE'
+export const ADD_MYPOST = "ADD_MYPOST"
+export const REMOVE_MYPOST = "REMOVE_MYPOST"
 
 export const logIn = (data) => {
   return {
@@ -66,6 +68,19 @@ const reducer = (state = initialState, action) => {
           ...state.userInfo,
           comment: action.comment,
         }
+      }
+    case ADD_MYPOST:
+      return {
+        ...state,
+        posts: [
+          action.data,
+          ...state.posts
+        ]
+      }
+    case REMOVE_MYPOST:
+      return {
+        ...state,
+        posts: [...state.posts].filter(prev => prev._id !== action.id)
       }
     default:
       return state;

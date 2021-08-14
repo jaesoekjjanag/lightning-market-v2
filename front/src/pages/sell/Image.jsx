@@ -94,7 +94,10 @@ const Image = () => {
     // 썸네일 이미지 코드
     for (let i of files) {
       const reader = new FileReader();
-      reader.onload = (data) => setThumbnailImg((prev) => ([data.target.result, ...prev]));
+      reader.onload = (data) => setThumbnailImg((prev) => (
+        [...prev, { title: i.name, src: data.target.result }])
+        // reader.onload = (data) => setThumbnailImg((prev) =>([data.target.result, ...prev])
+      );
       await reader.readAsDataURL(i)
     }
 
@@ -116,12 +119,20 @@ const Image = () => {
     dispatch(imagesName);
   }
 
+  const deleteImg = (e) => {
+    //? 인덱스를 가져오기 위해 title를 써도 되는지 의문
+    const { src } = e.currentTarget.childNodes[0]
+    const name = e.currentTarget.childNodes[0].alt
+    setThumbnailImg(prev => (prev.filter(v => v.src !== src)))
+    setUploadImg(prev => (prev.filter(v => v.name !== name)))
+  }
+
   return (
     <ImageForm onSubmit={onSumbitImage} encType='mutipart/form-data'>
       <ImageInput onClick={onClickBlock} title='사진 등록'><img src="plus.png" alt="plus.png" /></ImageInput>
-      {thumbnailImg && thumbnailImg.map((v) => (
-        <ImgBlock key={v}><Img src={v} alt={v} />
-          <Overlay title='사진 제거'><img src="thinX.png" alt="deleteImage" /></Overlay>
+      {thumbnailImg && thumbnailImg.map((v, i) => (
+        <ImgBlock key={v.title} onClick={deleteImg}><Img src={v.src} alt={v.title} />
+          <Overlay title='사진 제거' ><img src="thinX.png" alt="deleteImage" /></Overlay>
         </ImgBlock>)
       )}
       <input type="file" onChange={uploadImage} ref={imgRef} hidden multiple />

@@ -1,5 +1,7 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import EachProduct from './EachProduct'
 
 const FilterDiv = styled.div`
   margin-bottom: 2rem;
@@ -21,19 +23,24 @@ const FilterDiv = styled.div`
     padding: 5px;
   }
 `
-const ItemInfo = styled.ul`
-  display:flex;
-  justify-content:space-around;
-  list-style:none;
+
+const Table = styled.table`
+  width:100%;
   text-align:center;
-  border-top:0.5px solid gray;
-  border-bottom: 0.5px solid gray;
+  border-collapse:collapse;
+`
+const ItemInfo = styled.thead`
   font-size: 1em;
   line-height: 2em;
-  padding:0;
+  border-top:0.1px solid black;
+  border-bottom:0.1px solid black;
+
+
 `
 
 const Manage = () => {
+  const myProducts = useSelector(state => state.user.posts)
+  console.log(myProducts)
   return (
     <React.Fragment>
       <FilterDiv className='filter'>
@@ -50,17 +57,25 @@ const Manage = () => {
           <option value="">판매완료</option>
         </select>
       </FilterDiv>
-      <div>
+      <Table>
         <ItemInfo>
-          <li>사진</li>
-          <li>판매상태</li>
-          <li>상품명</li>
-          <li>가격</li>
-          <li>찜/댓글</li>
-          <li>최근수정일</li>
-          <li>기능</li>
+          <tr>
+            <th style={{ width: '180px' }}>사진</th>
+            <th>판매상태</th>
+            <th style={{ width: '250px' }}>상품명</th>
+            <th>가격</th>
+            <th>찜/댓글</th>
+            <th>최근수정일</th>
+            <th>기능</th>
+          </tr>
         </ItemInfo>
-      </div>
+        <tbody>
+          {myProducts.map((v, i) => (
+            <EachProduct product={v} />
+          ))}
+        </tbody>
+
+      </Table>
     </React.Fragment>
 
   )
