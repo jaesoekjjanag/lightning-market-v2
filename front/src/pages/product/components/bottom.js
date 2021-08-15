@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components'
 import axios from 'axios';
 
 import Comment from './comment';
+import Input from './Input';
 
 // * 왼쪽 상단 상품정보
 const LeftMainWrap = styled.div`
@@ -34,54 +35,6 @@ const InfoAsk = styled(Info)`
 const AskCount = styled.span`
   padding-left: 7px;
   color: red;
-`
-const InputWrap = styled.div`
-  border-right: 1px solid rgb(238, 238, 238);
-  border-bottom: 1px solid rgb(238, 238, 238);
-  border-left: 1px solid rgb(238, 238, 238);
-`
-const TextareaWrap = styled.div`
-  width: 100%;
-  padding: 20px;
-  height: 100px;
-  border-bottom: 1px solid rgb(238, 238, 238);
-`
-const TextArea = styled.textarea`
-  width: 100%;
-  height: 100%;
-  resize: none;
-  font-size: 13px;
-  line-height: 1.5;
-  border: none;
-  outline: none;
-`
-const AskPostWrap = styled.div`
-  display: flex;
-  width: 100%;
-  height: 50px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 10px;
-`
-const CharCount = styled.div`
-  margin-left: 10px;
-  font-size: 12px;
-  color: rgb(136, 136, 136);
-`
-const PostBtn = styled.button`
-  border: 1px solid rgb(238, 238, 238);
-  height: 32px;
-  display: flex;
-  align-items: center;
-  padding: 0px 20px;
-  font-size: 13px;
-  color: rgb(136, 136, 136);
-
-  & > * {
-    width: 15px;
-    height: 16px;
-    margin-right: 4px;
-  }
 `
 const CommentsWrap = styled.div`
   margin-top: 10px;
@@ -327,24 +280,29 @@ const BuyBtn = styled(BtnCss)`
 `
 
 
-const Bottom = ({product}) => {
-  console.log(product)
-  // * 상품문의 길이 
-  const [askLen, setAskLen] = useState(0);
+const Bottom = ({ product }) => {
 
-  // * 상품문의 길이 계산
-  const charLength = (e) => {
-    setAskLen(e.target.value.length);
-  };
+  //* 댓글 목록
+  const [comments, setComments] = useState([]);
 
-  const user = {
-    shopName: "yujin",
-    comment: '홧팅입니다요!',
-    profile: '',
-  }
+
+  //* 댓글 목록 불러오기
+  useEffect(() => {
+    if (product._id) {
+      axios.get(`/comment/comments?productId=${product._id}`)
+        .then((res) => {
+          setComments((prev) => (prev.concat(res.data))
+          )
+        })
+    }
+  }, [product])
+
+
+
+
 
   return <>
-    <div style={{display: "flex", marginTop:"30px"}}>
+    <div style={{ display: "flex", marginTop: "30px" }}>
 
       <LeftMainWrap >
         <LeftSubWrap>
@@ -360,20 +318,9 @@ const Bottom = ({product}) => {
               상품문의
               <AskCount>1</AskCount>
             </InfoAsk>
-            <InputWrap>
-              <TextareaWrap>
-                <TextArea placeholder="상품문의 입력" maxLength="100" onInput={charLength}></TextArea>
-              </TextareaWrap>
-              <AskPostWrap>
-                <CharCount>{askLen} / 100</CharCount>
-                <PostBtn>
-                  <img src="pencil.png" alt="문의등록버튼 아이콘" />
-                  등록
-                </PostBtn>
-              </AskPostWrap>
-            </InputWrap>
+            <Input product={product} setComments={setComments} />
             <CommentsWrap>
-              <Comment data={user} />
+              {comments.map((v) => (<Comment data={v} />))}
             </CommentsWrap>
           </AskWrap>
 
@@ -386,23 +333,23 @@ const Bottom = ({product}) => {
           <InfoWrap>
             <ShopInfo>
               <ShopProfileWrap>
-                <img src="thunder-profile.png" alt="판매자 프로필 이미지"/>
+                <img src="thunder-profile.png" alt="판매자 프로필 이미지" />
               </ShopProfileWrap>
               <div>
-                <ShopName>{product.seller.nickname}</ShopName>
+                <ShopName>{product.seller?.nickname}</ShopName>
                 <SellerInfo>
-                  <a href="#">상품6</a>
-                  <a href="#">팔로워6</a>
+                  {/* <a href="#">상품6</a> */}
+                  {/* <a href="#">팔로워6</a> */}
                 </SellerInfo>
               </div>
             </ShopInfo>
             <FollowBtn>
-              <img src="following.png" alt=""/>
+              <img src="following.png" alt="" />
               팔로우
             </FollowBtn>
             <ProductsImgWrap>
-              <div><img src="thunder-profile.png" alt=""/></div>
-              <div><img src="thunder-profile.png" alt=""/></div>
+              <div><img src="thunder-profile.png" alt="" /></div>
+              <div><img src="thunder-profile.png" alt="" /></div>
             </ProductsImgWrap>
             <MoreProductsDiv>
               <MoreProductsA href="#">
@@ -417,7 +364,7 @@ const Bottom = ({product}) => {
               </ShopReview>
               <ReviewWrap>
                 <ReviewerProfile>
-                  <img src="thunder-profile.png" alt="리뷰작성자 프로필 이미지"/>
+                  <img src="thunder-profile.png" alt="리뷰작성자 프로필 이미지" />
                 </ReviewerProfile>
                 <ReviewerWrap>
                   <ReviewerNickname>
@@ -425,11 +372,11 @@ const Bottom = ({product}) => {
                     <div>1달 전</div>
                   </ReviewerNickname>
                   <StartReview>
-                    <img src="star.png" alt="별점 별 이미지"/>
-                    <img src="star.png" alt="별점 별 이미지"/>
-                    <img src="star.png" alt="별점 별 이미지"/>
-                    <img src="star.png" alt="별점 별 이미지"/>
-                    <img src="star.png" alt="별점 별 이미지"/>
+                    <img src="star.png" alt="별점 별 이미지" />
+                    <img src="star.png" alt="별점 별 이미지" />
+                    <img src="star.png" alt="별점 별 이미지" />
+                    <img src="star.png" alt="별점 별 이미지" />
+                    <img src="star.png" alt="별점 별 이미지" />
                   </StartReview>
                   <ReviewContent>포장도 꼼꼼하고 배송도 빠르게 해주셨습니다~^^</ReviewContent>
                 </ReviewerWrap>

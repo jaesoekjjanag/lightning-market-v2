@@ -5,6 +5,7 @@ const Image = require('../models/Image')
 const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
+const mongoose = require('mongoose')
 
 // * router.[메소드]('/응답할 주소', (req,res,[next])) 형태로 작성
 
@@ -35,7 +36,9 @@ const upload = multer({ storage })
 router.post('/', async (req, res, next) => {
   try {
     const post = new Post(req.body);
-    console.log(post);
+    if (req.body.image.length === 0) {
+      const error = new Error('이미지를 선택한 후 이미지 등록 버튼을 꼭 눌러주세요')
+    }
     await post.save((err) => {
       if (err) {
         console.error(err);
@@ -49,6 +52,7 @@ router.post('/', async (req, res, next) => {
     // }))
   } catch (err) {
     console.error(err);
+    return res.status(500).send(err)
   }
 })
 
@@ -89,8 +93,16 @@ router.post('/image', upload.array('image'), async (req, res, next) => {
 router.get('/product', async (req, res, next) => {
   //상품 id
   const { id } = req.query
-  const post = await Post.findOne({ _id: id }).populate('seller')
+  const post = await Post.findOne({ _id: id }).populate('seller', 'nickname')
   res.status(200).send(post)
+})
 
+router.post('/test', async (req, res, next) => {
+  const { id } = req.body;
+  console.log(id)
+  const post = await Post.aggregate([
+    { $match: { _id: mongoose.Types.ObjectId(`${id}`) } }
+  ])
+  console.log(post)
 })
 module.exports = router;

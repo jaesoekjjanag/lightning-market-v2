@@ -299,24 +299,28 @@ const Register = ({ match, history }) => {
         e.preventDefault();
         //form에 담아서 post
         const { title, address, condition, exchange, price, description, amount } = e.target
-        const post = await axios.post('/post', {
-            seller: userInfo.id,
-            image: image,
-            title: title.value,
-            address: address.value,
-            condition: condition.value,
-            exchange: exchange.value,
-            price: price.value,
-            description: description.value,
-            amount: amount.value
-        })
-        console.log(post.data)
-        dispatch({ type: REMOVE_IMAGES })
-        dispatch({
-            type: ADD_MYPOST,
-            data: post.data
-        })
-        history.goBack();
+        try {
+            const post = await axios.post('/post', {
+                seller: userInfo.id,
+                image: image,
+                title: title.value,
+                address: address.value,
+                condition: condition.value,
+                exchange: exchange.value,
+                price: price.value,
+                description: description.value,
+                amount: amount.value
+            })
+            dispatch({ type: REMOVE_IMAGES })
+            dispatch({
+                type: ADD_MYPOST,
+                data: post.data
+            })
+            history.goBack();
+        } catch (err) {
+            console.log(err)
+        }
+
     }
 
     return <React.Fragment>

@@ -54,27 +54,25 @@ cursor: pointer;
 
 
 const Comment = ({ data }) => {
-
   return (
-  
     <CommentMainWrap>
       <CommentSubWrap>
         <ProfileWrap>
-          <img src="thunder-profile.png" width="48" height="48" alt="프로필 이미지" style={{ borderRadius:"50%"}}/>
+          <img src="thunder-profile.png" width="48" height="48" alt="프로필 이미지" style={{ borderRadius: "50%" }} />
         </ProfileWrap>
         <InfoWrap>
           <Top>
-            <ShopName>{data.shopName}</ShopName>
+            <ShopName>{data.writer.nickname}</ShopName>
             <UploadTime>방금 전</UploadTime>
           </Top>
-          <Middle>{data.comment}</Middle>
+          <Middle>{data.content}</Middle>
           <Bottom>
             <BtnWrap>
-              <img src="comment.png" width="17" height="14" alt="댓글달기 버튼 이미지" style={{marginRight: "4px"}} />
+              <img src="comment.png" width="17" height="14" alt="댓글달기 버튼 이미지" style={{ marginRight: "4px" }} />
               댓글달기
             </BtnWrap>
             <BtnWrap>
-              <img src="trashcan.png" width="17" height="14" alt="삭제하기 버튼 이미지" style={{marginRight: "4px"}}/>
+              <img src="trashcan.png" width="17" height="14" alt="삭제하기 버튼 이미지" style={{ marginRight: "4px" }} />
               삭제하기
             </BtnWrap>
           </Bottom>

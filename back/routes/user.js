@@ -49,6 +49,7 @@ router.post('/login', async (req, res, next) => {
         if (result == true) {
           const token = jwt.sign(info._id.toString(), process.env.SECRET)
           res.cookie('auth', token)
+          res.cookie('id', info._id)
           res.status(200).json({
             'id': info._id,
             'profile': info.profile,
