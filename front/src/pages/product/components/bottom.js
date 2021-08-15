@@ -320,7 +320,7 @@ const Bottom = ({ product }) => {
             </InfoAsk>
             <Input product={product} setComments={setComments} />
             <CommentsWrap>
-              {comments.map((v) => (<Comment data={v} />))}
+              {comments.map((v) => (<Comment data={v} setComments={setComments} />))}
             </CommentsWrap>
           </AskWrap>
 

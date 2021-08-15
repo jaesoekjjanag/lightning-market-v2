@@ -35,6 +35,15 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.delete('/', async (req, res, next) => {
+  try {
+    await Comment.deleteOne({ _id: req.query.id })
+    res.status(200).send('delete')
+  } catch (err) {
+    console.error(err)
+    return next(err)
+  }
+})
 
 router.get('/comments', async (req, res, next) => {
   try {
@@ -46,4 +55,5 @@ router.get('/comments', async (req, res, next) => {
     return next(err)
   }
 })
+
 module.exports = router

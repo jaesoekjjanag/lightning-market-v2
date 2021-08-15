@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
+import axios from 'axios'
 
 const CommentMainWrap = styled.div`
   padding-top: 25px;
@@ -53,7 +54,21 @@ cursor: pointer;
 `
 
 
-const Comment = ({ data }) => {
+const Comment = ({ data, setComments }) => {
+  const onClickDelete = async () => {
+    const confirm = window.confirm('댓글을 삭제하시겠습니까?')
+    if (confirm) {
+      try {
+        await axios.delete(`/comment?id=${data._id}`)
+        setComments(prev => prev.filter(
+          (v) => v._id !== data._id
+        ))
+        alert('댓글이 삭제되었습니다.')
+      } catch (err) {
+        alert('댓글 삭제를 실패했습니다.')
+      }
+    }
+  }
   return (
     <CommentMainWrap>
       <CommentSubWrap>
@@ -67,11 +82,11 @@ const Comment = ({ data }) => {
           </Top>
           <Middle>{data.content}</Middle>
           <Bottom>
-            <BtnWrap>
+            <BtnWrap onClick>
               <img src="comment.png" width="17" height="14" alt="댓글달기 버튼 이미지" style={{ marginRight: "4px" }} />
               댓글달기
             </BtnWrap>
-            <BtnWrap>
+            <BtnWrap onClick={onClickDelete}>
               <img src="trashcan.png" width="17" height="14" alt="삭제하기 버튼 이미지" style={{ marginRight: "4px" }} />
               삭제하기
             </BtnWrap>
