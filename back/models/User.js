@@ -24,7 +24,7 @@ const User = mongoose.Schema({
     required: false,
     default: Date.now() + '상점'
   },
-  comment: {
+  ask: {
     type: String,
     required: false
   },

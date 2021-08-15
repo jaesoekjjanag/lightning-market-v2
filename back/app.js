@@ -6,7 +6,6 @@ const morgan = require('morgan')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const userRouter = require('./routes/user')
-const imageRouter = require('./routes/image')
 const postRouter = require('./routes/post')
 const commentRouter = require('./routes/comment')
 
@@ -37,7 +36,6 @@ mongoose.connect(process.env.MONGO, {
 })
 
 app.use('/user', userRouter)
-app.use('/image', imageRouter)
 app.use('/post', postRouter)
 app.use('/comment', commentRouter)
 

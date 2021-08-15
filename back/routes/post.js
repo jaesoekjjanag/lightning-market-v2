@@ -70,7 +70,6 @@ router.delete('/', async (req, res, next) => {
 //내 상점
 router.post('/mypost', async (req, res, next) => {
   const myPost = await Post.find({ seller: req.body.id }).sort({ createdAt: -1 })
-  console.log(myPost)
   return res.json(myPost);
 })
 
@@ -78,7 +77,6 @@ router.post('/mypost', async (req, res, next) => {
 router.post('/posts', async (req, res, next) => {
   try {
     const posts = await Post.find().limit(25).sort({ createdAt: -1 });
-    // console.log(posts)
     return res.status(200).json(posts);
   } catch (err) {
     console.error(err);
@@ -93,16 +91,8 @@ router.post('/image', upload.array('image'), async (req, res, next) => {
 router.get('/product', async (req, res, next) => {
   //상품 id
   const { id } = req.query
-  const post = await Post.findOne({ _id: id }).populate('seller', 'nickname')
+  const post = await Post.findOne({ _id: id }).populate('seller', 'nickname profile')
   res.status(200).send(post)
 })
 
-router.post('/test', async (req, res, next) => {
-  const { id } = req.body;
-  console.log(id)
-  const post = await Post.aggregate([
-    { $match: { _id: mongoose.Types.ObjectId(`${id}`) } }
-  ])
-  console.log(post)
-})
 module.exports = router;

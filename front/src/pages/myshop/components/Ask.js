@@ -1,6 +1,8 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+
+import EachAsk from './EachAsk'
 const Form = styled.form`
   width: 100%;
 
@@ -35,18 +37,34 @@ const Bottom = styled.div`
 `
 
 const Ask = ({ match }) => {
-  const id = (match.url.replace('/myshop/', '')).replace('/ask', '')
+  //* 상점 주인
+  const ownerId = (match.url.replace('/myshop/', '')).replace('/ask', '')
+  //* 문의 작성자
+  const userId = decodeURIComponent(document.cookie.split(';')[1]).replace('id=j', '').match(/[0-9a-z]/g).join('');
+
   const [text, setText] = useState('');
-  // const [comment, ]
+  const [asks, setAsks] = useState([]);
+
+  useEffect(() => {
+    axios.get(`/comment/asks?id=${ownerId}`)
+      .then((res) => setAsks(prev => prev.concat(res.data)))
+  }, [ownerId])
 
   const submitComment = async (e) => {
     e.preventDefault();
-    await axios.post('/comment', { id: id, text: text })
+    try {
+      const res = await axios.post('/comment/ask', { AskTo: ownerId, AskFrom: userId, content: text })
+      setAsks(prev => prev.concat(res.data))
+    } catch (err) {
+      console.error(err)
+    }
+    e.target.reset();
   }
 
-  const onChangeText = (e) => {
+  const onChangeText = useCallback((e) => {
     setText(e.target.value)
-  }
+  }, [setText])
+
   return (
     <div>
       <Form onSubmit={submitComment}>
@@ -56,6 +74,7 @@ const Ask = ({ match }) => {
           <button>입력</button>
         </Bottom>
       </Form>
+      {asks.map((v) => (<EachAsk data={v} key={v} />))}
     </div>
   )
 }

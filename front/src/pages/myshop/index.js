@@ -152,6 +152,7 @@ const Router = memo(({ match }) => {
   //? 라우팅을 어떻게 해야할지 잘 모르겠음..
 
   const id = (match.url.replace('/myshop/', ''))
+  console.log(id);
 
   const { profile, nickname, comment, createdAt } = useSelector(state => state.user.userInfo && state.user.userInfo)
   const postCount = useSelector(state => state.user?.posts).length;
@@ -162,7 +163,7 @@ const Router = memo(({ match }) => {
   const [tabName, setTabName] = useState('상품')
   const daysAgo = parseInt((new Date() - new Date(createdAt)) / (24 * 3600 * 1000))
   const dispatch = useDispatch();
-  console.log(profile)
+
   const onClickEdit = async () => {
     try {
       const res = await axios.patch('/user/nickname', { id: id, nickname: nicknameValue })

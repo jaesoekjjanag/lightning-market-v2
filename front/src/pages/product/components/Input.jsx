@@ -65,6 +65,7 @@ const Input = ({ product, setComments }) => {
     e.preventDefault();
     const res = await axios.post('/comment', { post: product._id, writer: userId, content: e.target.comment.value })
     setComments(prev => (prev.concat(res.data)));
+    e.target.reset();
   }
 
   return (
