@@ -245,7 +245,6 @@ const BuyBtn = styled(BtnCss)`
 `
 
 const Right = ({ product }) => {
-  console.log(product)
   return (
     <RightWrap>
       <ShopWrap>
@@ -260,8 +259,6 @@ const Right = ({ product }) => {
                 <div>
                   <ShopName>{product.seller.nickname}</ShopName>
                   <SellerInfo>
-                    {/* <a href="#">상품6</a> */}
-                    {/* <a href="#">팔로워6</a> */}
                   </SellerInfo>
                 </div>
               </ShopInfo>

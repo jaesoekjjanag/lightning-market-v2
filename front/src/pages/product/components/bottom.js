@@ -82,7 +82,7 @@ const Bottom = ({ product }) => {
             </InfoAsk>
             <Input product={product} setComments={setComments} />
             <CommentsWrap>
-              {comments.map((v) => (<Comment data={v} key={v} setComments={setComments} />))}
+              {comments.map((v) => (<Comment data={v} key={v.createdAt} setComments={setComments} />))}
             </CommentsWrap>
           </AskWrap>
         </LeftSubWrap>

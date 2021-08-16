@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect, memo } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 
@@ -14,6 +14,7 @@ const Form = styled.form`
     margin:none;
     font-size:1rem;
     overflow:hidden;
+    border:0.1px solid lightgray;
 
     &:focus{
       outline:none;
@@ -27,16 +28,22 @@ const Bottom = styled.div`
   align-items:center;
   height:3rem;
   border:0.1px solid black;
+  border:0.1px solid lightgray;
   padding:1%;
-
+  
+  span{
+    font-weight:100;
+    font-size: 0.9rem;
+  }
   button {
     border: 0.1px solid black;
-    height: 1.5rem;
+    height: 1.7rem;
     padding:0 1rem;
+    border:0.1px solid lightgray;
   }
 `
 
-const Ask = ({ match }) => {
+const Ask = memo(({ match }) => {
   //* 상점 주인
   const ownerId = (match.url.replace('/myshop/', '')).replace('/ask', '')
   //* 문의 작성자
@@ -66,7 +73,7 @@ const Ask = ({ match }) => {
   }, [setText])
 
   return (
-    <div>
+    <>
       <Form onSubmit={submitComment}>
         <textarea name="ask" id="ask" maxLength='300' onChange={onChangeText}></textarea>
         <Bottom>
@@ -75,8 +82,8 @@ const Ask = ({ match }) => {
         </Bottom>
       </Form>
       {asks.map((v) => (<EachAsk data={v} key={v} />))}
-    </div>
+    </>
   )
-}
+})
 
 export default Ask

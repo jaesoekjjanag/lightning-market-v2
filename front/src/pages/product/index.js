@@ -23,7 +23,6 @@ const Product = ({ match }) => {
     // * 백엔드로 정보 요청
     axios.get(`/post/product?id=${id}`)
       .then((res) => {
-        console.log(res.data)
         setProduct(res.data)
       })
   }, [id])

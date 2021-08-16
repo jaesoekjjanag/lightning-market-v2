@@ -116,4 +116,15 @@ router.patch('/comment', async (req, res, next) => {
   }
 })
 
+router.get('/', async (req, res, next) => {
+  try {
+    const user = await User.findOne({ _id: req.query.id }, '_id profile nickname comment createdAt email')
+    return res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(401).send('인증받지 못한 사용자입니다.')
+    return next(err);
+  }
+
+})
 module.exports = router;

@@ -89,7 +89,7 @@ const Comment = ({ data, setComments }) => {
           </Top>
           <Middle>{data.content}</Middle>
           <Bottom>
-            <BtnWrap onClick>
+            <BtnWrap>
               <img src="comment.png" width="17" height="14" alt="댓글달기 버튼 이미지" style={{ marginRight: "4px" }} />
               댓글달기
             </BtnWrap>

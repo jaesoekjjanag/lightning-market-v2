@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import {
   CommentMainWrap, CommentSubWrap, ProfileWrap, InfoWrap,
@@ -6,7 +6,7 @@ import {
 } from '../../product/components/comment'
 
 
-const EachAsk = ({ data }) => {
+const EachAsk = memo(({ data }) => {
   return (
     <CommentMainWrap>
       <CommentSubWrap>
@@ -33,6 +33,6 @@ const EachAsk = ({ data }) => {
       </CommentSubWrap>
     </CommentMainWrap>
   );
-}
+})
 
 export default EachAsk
