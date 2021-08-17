@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
-
+import axios from 'axios'
 import { Info } from './bottom';
+import { useSelector, useDispatch } from 'react-redux';
+import { FOLLOW, UNFOLLOW } from '../../../reducer/user';
 
 // * 오른쪽 상점정보 css
 const RightWrap = styled.div`
@@ -30,6 +32,7 @@ const ShopProfileWrap = styled.div`
     width: 48px;
     height: 48px;
     border-radius: 50%;
+    object-fit:cover;
   }
 `
 const ShopName = styled.a`
@@ -41,9 +44,9 @@ const SellerInfo = styled.div`
   display: flex;
   & > * {
     font-size: 13px;
-  }
-  & > a:first-child{
     color: rgb(153, 153, 153);
+  }
+  & > div:first-child{
     margin-right: 17px;
     position: relative;
 
@@ -245,6 +248,40 @@ const BuyBtn = styled(BtnCss)`
 `
 
 const Right = ({ product }) => {
+  const { follow, id } = useSelector(state => state.user.userInfo)
+  const dispatch = useDispatch();
+  // const userId = decodeURIComponent(document.cookie.split(';')[1]).replace('id=j:', '').match(/[^"]/g).splice(1).join('')
+
+  const onClickFollow = async () => {
+    try {
+      const res = await axios.post('/user/follow', { followTo: product.seller._id, followFrom: id })
+      console.log(res.data);
+      dispatch({
+        type: FOLLOW,
+        follow: res.data
+      })
+    } catch (err) {
+      return console.error(err.response.data)
+    }
+  }
+  const followTo = follow.map(v => v.followTo)
+  const isFollowing = followTo.includes(product.seller?._id);
+  const me = product.seller?._id === id
+
+  const onClickFollowing = async () => {
+    try {
+      const res = await axios.delete(`/user/follow?followTo=${product.seller._id}&followFrom=${id}`)
+      console.log(res.data)
+      dispatch({
+        type: UNFOLLOW,
+        follow: res.data,
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  console.log(product.seller)
   return (
     <RightWrap>
       <ShopWrap>
@@ -259,14 +296,22 @@ const Right = ({ product }) => {
                 <div>
                   <ShopName>{product.seller.nickname}</ShopName>
                   <SellerInfo>
+                    <div>상품 1개</div>
+                    <div>팔로워 100만명</div>
                   </SellerInfo>
                 </div>
               </ShopInfo>
             </Link>}
-          <FollowBtn>
-            <img src="following.png" alt="" />
-            팔로우
-          </FollowBtn>
+
+          {me || (isFollowing
+            ? <FollowBtn onClick={onClickFollowing}>
+              <img src="팔로잉.png" alt="following.png" />
+              팔로잉
+            </FollowBtn>
+            : <FollowBtn onClick={onClickFollow}>
+              <img src="following.png" alt="following.png" />
+              팔로우
+            </FollowBtn>)}
           <ProductsImgWrap>
             <div><img src="thunder-profile.png" alt="" /></div>
             <div><img src="thunder-profile.png" alt="" /></div>

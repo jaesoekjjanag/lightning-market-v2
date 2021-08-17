@@ -5,8 +5,8 @@ const dotenv = require('dotenv')
 const morgan = require('morgan')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const userRouter = require('./routes/user')
 const postRouter = require('./routes/post')
+const userRouter = require('./routes/user')
 const commentRouter = require('./routes/comment')
 
 dotenv.config();

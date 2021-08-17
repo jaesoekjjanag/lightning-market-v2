@@ -5,7 +5,7 @@ import { NICKNAME_CHANGE, COMMENT_CHANGE, PROFILE_CHANGE } from '../../../reduce
 import axios from 'axios'
 
 const TopDiv = styled.div`
-  border: 0.5px solid gray;
+  border: 0.1px solid lightgray;
   height: 310px;
   box-sizing: border-box;
   display:flex;
@@ -105,7 +105,8 @@ const ProfileImg = styled.div`
   line-height:310px;
   background-color:lightgray;
   cursor:pointer;
-  position:relative
+  position:relative;
+  pointer-events:${prop => prop.me || 'none'};
 `
 const MyImg = styled.img`
   height:100%;
@@ -182,7 +183,7 @@ const Top = ({ userInfo, id, me }) => {
   }
   return (
     <TopDiv >
-      <ProfileImg title="클릭하여 프로필 사진 변경" onClick={clickInput}>
+      <ProfileImg me={me} title="클릭하여 프로필 사진 변경" onClick={clickInput}>
         {userInfo
           ? <MyImg src={`http://localhost:5000/profile/${userInfo.profile}`} alt='profileImage' />
           : <DefaultImg src="man.png" alt="profileImage" />

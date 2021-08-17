@@ -66,7 +66,6 @@ const Bottom = ({ product }) => {
 
   return <>
     <div style={{ display: "flex", marginTop: "30px" }}>
-
       <LeftMainWrap >
         <LeftSubWrap>
           <div>

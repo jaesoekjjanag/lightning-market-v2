@@ -50,6 +50,11 @@ const Post = mongoose.Schema({
     type: Number,
     required: true,
   },
+  state: {
+    type: String,
+    required: true,
+    default: '판매 중'
+  }
 }, { timestamps: true })
 
 

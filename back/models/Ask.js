@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const ObjectId = mongoose.Types.ObjectId
+const ObjectId = mongoose.Types
 
 const Ask = mongoose.Schema({
   AskTo: {

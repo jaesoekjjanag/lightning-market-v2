@@ -23,9 +23,7 @@ const BtmDiv = styled.div`
     font-weight:500;
   }
 `
-const Hr = styled.hr`
-  margin: 1rem 0 2rem 0;
-`
+
 
 const Router = memo(({ match }) => {
   const id = (match.url.replace('/myshop/', ''))
@@ -49,7 +47,6 @@ const Router = memo(({ match }) => {
   }, [id, data])
 
 
-  const [tabName, setTabName] = useState('상품')
 
 
 
@@ -60,9 +57,7 @@ const Router = memo(({ match }) => {
         <Top id={id} me={me} userInfo={userInfo} />
         <BtmDiv>
           <LinkTagStyle />
-          <Tab id={id} changeTab={setTabName} />
-          <div><h3>{tabName} n</h3></div>
-          <Hr />
+          <Tab id={id} />
           <Route path={`${match.url}/product`} component={Product} />
           <Route path={`${match.url}/ask`} component={Ask} />
           <Route path={`${match.url}/jjim`} component={Jjim} />

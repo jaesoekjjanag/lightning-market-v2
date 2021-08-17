@@ -12,6 +12,8 @@ export const COMMENT_CHANGE = "COMMNET_CHANGE"
 export const PROFILE_CHANGE = 'PROFILE_CHANGE'
 export const ADD_MYPOST = "ADD_MYPOST"
 export const REMOVE_MYPOST = "REMOVE_MYPOST"
+export const FOLLOW = 'FOLLOW'
+export const UNFOLLOW = 'UNFOLLOW'
 
 export const logIn = (data) => {
   return {
@@ -23,6 +25,7 @@ export const logIn = (data) => {
     comment: data.comment,
     createdAt: data.createdAt,
     posts: data.posts,
+    follow: data.follow,
   }
 }
 
@@ -42,6 +45,7 @@ const reducer = (state = initialState, action) => {
           nickname: action.nickname,
           comment: action.comment,
           createdAt: action.createdAt,
+          follow: action.follow,
         },
         posts: [...state.posts].concat(action.posts)
       }
@@ -82,9 +86,24 @@ const reducer = (state = initialState, action) => {
         ...state,
         posts: [...state.posts].filter(prev => prev._id !== action.id)
       }
+    case FOLLOW:
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          follow: state.userInfo.follow.concat(action.follow)
+        }
+      }
+    case UNFOLLOW:
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          follow: state.userInfo.follow.filter(v => v.followTo !== action.follow.followTo)
+        }
+      }
     default:
       return state;
   }
 }
-
 export default reducer;

@@ -92,6 +92,7 @@ router.get('/product', async (req, res, next) => {
   //상품 id
   const { id } = req.query
   const post = await Post.findOne({ _id: id }).populate('seller', 'nickname profile')
+
   res.status(200).send(post)
 })
 
